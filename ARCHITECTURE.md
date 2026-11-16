@@ -1,4 +1,4 @@
-# 🧠 ARCHITECTURE - Équipe `TODO-nom-equipe`
+# 🧠 ARCHITECTURE - Équipe `TODO-Akatsuki`
 
 > **Jalon 1** : ce document est votre **spécification**. Il doit être **complet** : toute l'équipe va coder dessus.
 > Toutes les sections sont obligatoires. Remplacez **tous** les `TODO` (la CI « Livrables » les compte).
@@ -228,31 +228,76 @@ flowchart LR
 ### 4.2 Les 3 requêtes Cypher clés
 
 ```cypher
-// R4 - projets similaires
-TODO
+// R4 - projets similaires (nombre de compétences partagées)
+MATCH (p:Projet {projet_slug: $projet_slug})-[:UTILISE]->(s:Competence)
+      <-[:UTILISE]-(autre:Projet)
+WHERE autre <> p
+WITH autre, collect(DISTINCT s.skill_slug) AS competences_communes
+RETURN autre.projet_slug AS projet_slug,
+       autre.titre AS titre,
+       competences_communes,
+       size(competences_communes) AS score
+ORDER BY score DESC, projet_slug
+LIMIT $limit;
 
-// R5 - graphe de compétences d'un candidat
-TODO
+// R5 - graphe de compétences d'un candidat (paires projet-compétence)
+MATCH (c:Candidat {candidat_slug: $candidat_slug})-[:A_REALISE]->(p:Projet)
+      -[:UTILISE]->(s:Competence)
+RETURN c.candidat_slug AS candidat,
+       p.projet_slug AS projet_slug,
+       p.titre AS projet_titre,
+       s.skill_slug AS skill_slug,
+       s.nom AS skill_nom;
 
-// Compétences communes aux membres de l'équipe (ou requête de votre choix)
-TODO
+// R6 - compétences communes à tous les candidats d'une liste
+MATCH (c:Candidat)-[:A_REALISE]->(:Projet)-[:UTILISE]->(s:Competence)
+WHERE c.candidat_slug IN $candidats
+WITH s, collect(DISTINCT c.candidat_slug) AS membres
+WHERE size(membres) = size($candidats)
+RETURN s.skill_slug AS skill_slug, s.nom AS nom, membres
+ORDER BY nom;
 ```
 
 ### 4.3 Contraintes
 
 ```cypher
-TODO : CREATE CONSTRAINT ... IF NOT EXISTS
+CREATE CONSTRAINT candidat_slug_unique IF NOT EXISTS
+FOR (c:Candidat) REQUIRE c.candidat_slug IS UNIQUE;
+
+CREATE CONSTRAINT projet_slug_unique IF NOT EXISTS
+FOR (p:Projet) REQUIRE p.projet_slug IS UNIQUE;
+
+CREATE CONSTRAINT skill_slug_unique IF NOT EXISTS
+FOR (s:Competence) REQUIRE s.skill_slug IS UNIQUE;
 ```
 
 ## 5. Cohérence entre les bases (slugs pivots)
 
 | Entité | Slug | Dans MongoDB | Dans Neo4j |
 |---|---|---|---|
-| Candidat | `candidat_slug` (ex. `alice-martin`) | TODO | TODO |
-| Projet | `projet_slug` (ex. `smartcity-explorer`) | TODO | TODO |
-| Compétence | `skill_slug` (ex. `mongodb`) | TODO | TODO |
+| Candidat | `candidat_slug` (ex. `alice-martin`) | candidats._id et candidats.candidat_slug. Référencé dans projets.auteurs[]. | Propriété candidat_slug du nœud (:Candidat), unique. |
+| Projet | `projet_slug` (ex. `smartcity-explorer`) | projets._id et projets.projet_slug. | Propriété projet_slug du nœud (:Projet), unique. |
+| Compétence | `skill_slug` (ex. `mongodb`) | Pas de collection dédiée. Présent dans projets.competences[].skill_slug. | Propriété skill_slug du nœud (:Competence), unique. |
 
-**Suppression d'un projet** : que faites-vous dans chaque base ? TODO
+
+**Gouvernance**
+- Source de vérité des entités : MongoDB (candidats, projets)
+- Source de vérité du contenu : MongoDB (descriptions, dates, liens, expériences, formations)
+- Source de vérité des relations : Neo4j pour la navigation (A_REALISE, UTILISE). Elles sont dérivées de
+  projets.auteurs et projets.competences, écrits dans MongoDB, donc Neo4j est reconstructible.
+- Identifiant commun : le slug (candidat_slug, projet_slug, skill_slug)
+- 2 règles de cohérence :
+  1. Tout slug présent dans Neo4j doit correspondre à une fiche MongoDB (candidat, projet) ou à une
+     compétence listée dans au moins un projet MongoDB.
+  2. Toute écriture suit le même ordre: MongoDB d'abord, puis Neo4j par MERGE idempotent. Le seed et la
+     synchronisation sont relançables sans créer de doublons.
+
+     
+**Suppression d'un projet** : que faites-vous dans chaque base ? 
+1- MongoDB: supprimer le document dans projets (par projet_slug). Il n’y a rien d’autre à nettoyer, puisque candidats ne stocke pas de liste de projets (voir 3.1).
+2- Neo4j: MATCH (p:Projet {projet_slug: $slug}) DETACH DELETE p. Cela supprime le nœud et ses relations A_REALISE et UTILISE.
+3- Compétences orphelines: les nœuds Competence restent par défaut, car d’autres projets peuvent les utiliser. Un nettoyage optionnel supprime ceux qui n’ont plus aucun projet: MATCH (s:Competence) WHERE NOT (s)<-[:UTILISE]-() DELETE s.
+4- En cas d’échec à l’étape 2: le projet n’existe plus dans MongoDB mais reste dans Neo4j. Le service API ignore alors tout slug dont la fiche est introuvable lors de la récupération (R4, R9), et un script de resynchronisation idempotent reconstruit Neo4j depuis MongoDB.
 
 ## 6. Répartition du travail
 
