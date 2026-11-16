@@ -17,10 +17,13 @@ L'image reste modifiable : rouvrez-la dans Excalidraw (ou dans VS Code avec l'ex
 
 ```mermaid
 flowchart LR
-    F["Frontends (1 par membre)"] -->|HTTP JSON| API["FastAPI - backend d'équipe"]
-    API -->|"candidats, projets"| M[("MongoDB")]
-    API -->|"graphe de compétences"| N[("Neo4j")]
-    %% TODO : complétez / corrigez ce schéma selon VOS choix
+    F1["Frontend perso - membre 1"] -->|HTTP JSON| API
+    F2["Frontend perso - membre 2"] -->|HTTP JSON| API
+    F3["Frontends - membres 3 à 5"] -->|HTTP JSON| API
+    API["Backend FastAPI - API REST unifiée"]
+    API -->|"fiches : candidats, projets"| M[("MongoDB : candidats, projets")]
+    API -->|"relations : Candidat, Projet, Competence"| N[("Neo4j")]
+    API -.->|"synchro des slugs à chaque écriture"| N
 ```
 
 TODO : en 3 à 5 lignes, le rôle de chaque base dans votre portfolio.
@@ -204,9 +207,14 @@ Exemple de résultat (c’est ce que renverra GET /api/candidats/{slug}/stats):
 ### 4.1 Schéma du graphe
 
 ```mermaid
-graph LR
-    %% TODO : vos nœuds et relations orientées, ex. (Candidat)-[:A_REALISE]->(Projet)-[:UTILISE]->(Competence)-[:APPARTIENT_A]->(Domaine)
-    A[TODO] --> B[TODO]
+flowchart LR
+    F1["Frontend perso - membre 1"] -->|HTTP JSON| API
+    F2["Frontend perso - membre 2"] -->|HTTP JSON| API
+    F3["Frontends - membres 3 à 5"] -->|HTTP JSON| API
+    API["Backend FastAPI - API REST unifiée"]
+    API -->|"fiches : candidats, projets"| M[("MongoDB : candidats, projets")]
+    API -->|"relations : Candidat, Projet, Competence"| N[("Neo4j")]
+    API -.->|"synchro des slugs à chaque écriture"| N
 ```
 
 | Label | Propriétés | Clé unique |
