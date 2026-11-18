@@ -1,0 +1,103 @@
+{
+  "candidat_slug": "erwann-nobime",
+  "prenom": "Erwann",
+  "nom": "Nobime",
+  "titre": "Étudiant ingénieur ESIGELEC — Alternant Data Analyst chez Covéa",
+  "bio": "Les données racontent une histoire. Mon rôle ? Leur donner une voix claire et impactante pour guider la décision stratégique. Étudiant ingénieur spécialisé en Big Data, j'accompagne actuellement les métiers de Covéa dans la valorisation de leurs données, le développement d'outils internes et le pilotage de la performance.",
+  "localisation": "France (mobilité internationale)",
+  "liens": {
+    "github": "https://github.com/ErwannNobime",
+    "linkedin": "https://www.linkedin.com/in/erwann-nobime-842332328",
+    "email": "erwann.nobime@groupe-esigelec.org",
+    "telephone": "+33 6 02 29 67 57"
+  },
+  "langues": [
+    { "langue": "Français", "niveau": "Natif" },
+    { "langue": "Anglais", "niveau": "B2 — courant" },
+    { "langue": "Espagnol", "niveau": "Débutant" }
+  ],
+  "experiences": [
+    {
+      "entreprise": "Covéa",
+      "poste": "Alternant Data Analyst",
+      "debut": "2026-09",
+      "fin": null,
+      "description": "Études statistiques exploratoires et ad hoc sur l'activité assurance des particuliers (pôle performance et parcours omnicanaux). Conception d'une plateforme interne de gestion des demandes (Power Apps, Power Automate) centralisant les besoins des différentes directions et automatisant le suivi des traitements. Développement de tableaux de bord Power BI avec modélisation des données, fiabilisation des KPIs et rédaction de la documentation métier et technique.",
+      "competences": ["powerbi", "power-apps", "power-automate", "sql", "sas", "statistiques", "kpi"]
+    },
+    {
+      "entreprise": "Hello Pomelo (Barcelone)",
+      "poste": "Développeur Full-Stack Stagiaire",
+      "debut": "2026-07",
+      "fin": "2026-08",
+      "description": "Participation à la refonte complète d'une plateforme web avec migration d'une stack Symfony / React / Next.js vers Laravel à périmètre iso-fonctionnel. Définition de l'architecture cible, intégration des règles de sécurité (authentification, gestion des accès) et développement en environnement Agile (Jira, CI/CD, revues de code).",
+      "competences": ["laravel", "php", "symfony", "react", "nextjs", "git", "ci-cd"]
+    },
+    {
+      "entreprise": "Ministère de l'Économie et des Finances du Bénin",
+      "poste": "Analytics Engineer Stagiaire",
+      "debut": "2024-06",
+      "fin": "2024-08",
+      "description": "Automatisation du traitement des flux budgétaires via Python et modélisation sur Power BI. Création de A à Z d'une application métier sécurisée (PHP / Symfony) centralisant et fiabilisant la gestion des flux financiers.",
+      "competences": ["python", "powerbi", "php", "symfony"]
+    },
+    {
+      "entreprise": "Educo — en collaboration avec UNICEF",
+      "poste": "Data Analyst Stagiaire",
+      "debut": "2023-06",
+      "fin": "2023-07",
+      "description": "Recueil des besoins métier, définition des KPIs et déploiement de dashboards pour le suivi des programmes éducatifs. Création de supports analytiques, techniques et formations internes accélérant l'adoption des outils BI par les équipes.",
+      "competences": ["powerbi", "bi", "kpi", "data-visualization"]
+    }
+  ],
+  "formations": [
+    {
+      "ecole": "ESIGELEC Rouen",
+      "diplome": "Cycle ingénieur — Big Data pour la Transformation Numérique (BDTN)",
+      "debut": "2024-09",
+      "fin": "2027-06"
+    },
+    {
+      "ecole": "Classe Préparatoire aux Grandes Écoles (CPGE)",
+      "diplome": "MPSI",
+      "debut": "2022-09",
+      "fin": "2024-06"
+    }
+  ],
+  "competences": [
+    { "skill_slug": "python", "nom": "Python (Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn)", "domaine": "langages-data", "niveau": 4 },
+    { "skill_slug": "sql", "nom": "SQL (MySQL, Oracle DB, SQLite)", "domaine": "bases-de-donnees", "niveau": 4 },
+    { "skill_slug": "powerbi", "nom": "Power BI (DAX, Power Query)", "domaine": "bi", "niveau": 4 },
+    { "skill_slug": "power-apps", "nom": "Power Apps", "domaine": "low-code-automation", "niveau": 4 },
+    { "skill_slug": "power-automate", "nom": "Power Automate", "domaine": "low-code-automation", "niveau": 4 },
+    { "skill_slug": "microsoft-365", "nom": "Écosystème Microsoft 365 (SharePoint, Lists, Excel VBA)", "domaine": "outils", "niveau": 4 },
+    { "skill_slug": "tableau", "nom": "Tableau", "domaine": "bi", "niveau": 3 },
+    { "skill_slug": "sas", "nom": "SAS", "domaine": "langages-data", "niveau": 3 },
+    { "skill_slug": "spark", "nom": "Spark / PySpark", "domaine": "big-data", "niveau": 3 },
+    { "skill_slug": "hadoop", "nom": "Hadoop", "domaine": "big-data", "niveau": 3 },
+    { "skill_slug": "kafka", "nom": "Kafka", "domaine": "big-data", "niveau": 3 },
+    { "skill_slug": "machine-learning", "nom": "Machine Learning (XGBoost, Random Forest, SHAP, SMOTE)", "domaine": "ia-ml", "niveau": 4 },
+    { "skill_slug": "playwright", "nom": "Web Scraping — Playwright", "domaine": "data-engineering", "niveau": 4 },
+    { "skill_slug": "laravel", "nom": "Laravel", "domaine": "web-fullstack", "niveau": 3 },
+    { "skill_slug": "symfony", "nom": "PHP / Symfony", "domaine": "web-fullstack", "niveau": 3 },
+    { "skill_slug": "nextjs", "nom": "React / Next.js", "domaine": "frontend", "niveau": 3 },
+    { "skill_slug": "flask", "nom": "Flask", "domaine": "backend", "niveau": 3 },
+    { "skill_slug": "java", "nom": "Java", "domaine": "langages", "niveau": 3 },
+    { "skill_slug": "aws", "nom": "AWS", "domaine": "cloud", "niveau": 2 },
+    { "skill_slug": "azure", "nom": "Azure", "domaine": "cloud", "niveau": 2 },
+    { "skill_slug": "git", "nom": "Git / GitHub", "domaine": "outils", "niveau": 4 },
+    { "skill_slug": "ci-cd", "nom": "CI/CD & Jira", "domaine": "outils", "niveau": 3 },
+    { "skill_slug": "make", "nom": "Make / Webhooks", "domaine": "automation", "niveau": 3 }
+  ],
+  "qualites": [
+    "Esprit analytique et de synthèse",
+    "Rigueur et autonomie",
+    "Sens du service",
+    "Aisance relationnelle et adaptabilité"
+  ],
+  "engagements": [
+    "Président du Bureau Des Étudiants (BDE)",
+    "Bénévole distribution alimentaire étudiante",
+    "Exploration et immersion culturelle"
+  ]
+}
