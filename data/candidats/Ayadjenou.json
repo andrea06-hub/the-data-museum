@@ -49,7 +49,7 @@
     { "skill_slug": "scikit-learn", "nom": "Scikit-learn", "domaine": "data-science", "niveau": 3 },
     { "skill_slug": "dbt", "nom": "dbt", "domaine": "data-engineering", "niveau": 2 },
     { "skill_slug": "databricks", "nom": "Databricks", "domaine": "data-engineering", "niveau": 3 },
-    { "skill_slug": "power-bi", "nom": "Power BI", "domaine": "visualisation", "niveau": 4 },
+    { "skill_slug": "powerbi", "nom": "Power BI", "domaine": "visualisation", "niveau": 4 },
     { "skill_slug": "tableau", "nom": "Tableau", "domaine": "visualisation", "niveau": 3 },
     { "skill_slug": "excel", "nom": "Excel", "domaine": "visualisation", "niveau": 4 },
     { "skill_slug": "fastapi", "nom": "FastAPI", "domaine": "developpement", "niveau": 2 },
