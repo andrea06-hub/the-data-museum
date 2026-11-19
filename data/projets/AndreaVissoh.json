@@ -1,0 +1,61 @@
+
+[
+  {
+    "projet_slug": "dashboard-performance-commerciale",
+    "candidat_slugs": ["andrea-vissoh"],
+    "titre": "Tableau de bord de performance commerciale — Power BI",
+    "contexte": "Projet Business Intelligence — ESIGELEC",
+    "date_debut": null,
+    "date_fin": null,
+    "description": "Conception d'un tableau de bord interactif pour analyser les performances commerciales. Préparation, nettoyage et transformation des données avec Power Query, création d'indicateurs clés de performance (KPI) et de visualisations dynamiques permettant d'explorer les ventes et de faciliter l'analyse des résultats commerciaux.",
+    "competences": ["powerbi"],
+    "metriques": {},
+    "liens": {},
+    "images": []
+  },
+  {
+    "projet_slug": "analyse-big-data-velos",
+    "candidat_slugs": ["andrea-vissoh"],
+    "titre": "Analyse Big Data et prédiction de la dégradation des vélos",
+    "contexte": "Projet Big Data et Machine Learning — ESIGELEC",
+    "date_debut": null,
+    "date_fin": null,
+    "description": "Traitement et analyse d'un jeu de données de plus de 4 millions de lignes avec Apache Spark et PySpark. Préparation des données, exploration statistique et expérimentation de plusieurs modèles de Machine Learning, notamment Random Forest, Gradient Boosted Trees et régression logistique, afin d'étudier la dégradation des vélos et d'identifier les facteurs susceptibles de l'influencer.",
+    "competences": ["python", "spark", "machine-learning"],
+    "metriques": {
+      "volume_donnees": "Plus de 4 millions de lignes",
+      "modeles_etudies": ["Random Forest", "Gradient Boosted Trees", "Régression logistique"]
+    },
+    "liens": {},
+    "images": []
+  },
+  {
+    "projet_slug": "movewithus-plateforme-demenagement",
+    "candidat_slugs": ["andrea-vissoh"],
+    "titre": "MoveWithUs — Plateforme web de déménagement",
+    "contexte": "Projet de développement web — ESIGELEC",
+    "date_debut": null,
+    "date_fin": null,
+    "description": "Développement d'une plateforme web de mise en relation entre clients et déménageurs. Conception d'une base de données MySQL, développement des fonctionnalités de publication d'annonces, de gestion des utilisateurs, d'ajout de photos et de messagerie. Réalisation des interfaces avec HTML, CSS et Bootstrap et développement de la logique applicative en PHP.",
+    "competences": ["php", "sql", "html", "css", "javascript"],
+    "metriques": {},
+    "liens": {},
+    "images": []
+  },
+  {
+    "projet_slug": "classification-machine-learning",
+    "candidat_slugs": ["andrea-vissoh"],
+    "titre": "Comparaison de modèles de classification — Machine Learning",
+    "contexte": "Projet Data Science — ESIGELEC",
+    "date_debut": null,
+    "date_fin": null,
+    "description": "Étude comparative de quatre modèles de classification supervisée. Préparation des données, entraînement et évaluation des algorithmes afin de comparer leurs performances et d'identifier le modèle le plus adapté au problème étudié. Le meilleur modèle a obtenu une précision de 78,31 %.",
+    "competences": ["python", "machine-learning"],
+    "metriques": {
+      "nombre_modeles": 4,
+      "meilleure_precision": "78,31 %"
+    },
+    "liens": {},
+    "images": []
+  }
+]
