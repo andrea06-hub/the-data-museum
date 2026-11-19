@@ -1,0 +1,185 @@
+
+{
+  "candidat_slug": "andrea-vissoh",
+  "prenom": "Andréa",
+  "nom": "Vissoh",
+  "titre": "Étudiante ingénieure à l'ESIGELEC | Data Analyst • Data Scientist • Data Engineer",
+  "bio": "Passionnée par les nouvelles technologies et le potentiel des données, je suis étudiante ingénieure à l'ESIGELEC, avec un intérêt particulier pour la Data Analysis, la Data Science et le Data Engineering. À travers mes projets académiques, j'explore différentes façons de transformer des données brutes en informations pertinentes et en solutions concrètes. Ces expériences m'ont permis de développer mes compétences en Python, SQL, Spark/PySpark, Machine Learning et développement logiciel. Curieuse, persévérante et animée par l'envie d'apprendre, j'aime relever de nouveaux défis, travailler en équipe et donner du sens aux données. Mon ambition est de contribuer à des projets innovants où la technologie et l'analyse de données apportent une réelle valeur ajoutée.",
+  "localisation": "Rouen, France",
+  "liens": {
+  "email": "andrea.vissoh@groupe-esigelec.org",
+  "github": "https://github.com/andrea06-hub",
+  "linkedin": "https://www.linkedin.com/in/andréa-vissoh"
+  },
+  "langues": [
+  {
+     "langue": "Français",
+     "niveau": "Courant"
+   },
+   {
+     "langue": "Anglais",
+     "niveau": "B2"
+   },
+   {
+     "langue": "Espagnol",
+     "niveau": "Débutant"
+   },
+   {
+    "langue": "Fon",
+    "niveau": "Langue maternelle"
+   }
+ ],
+ "experiences": [
+  {
+    "type": "stage",
+    "entreprise": "Tics Master SARL",
+    "poste": "Stagiaire en développement web",
+    "debut": "2023-07",
+    "fin": "2023-08",
+    "description": "Développement d'un site web responsive de déménagement avec HTML et CSS.",
+    "competences": ["html", "css"]
+  },
+  {
+    "type": "emploi",
+    "entreprise": "Novotel Rouen Sud",
+    "poste": "Serveuse",
+    "debut": "2025-04",
+    "fin": null,
+    "description": "Accueil et service des clients, coordination avec l'équipe, organisation du service et gestion des priorités.",
+    "competences": []
+ }
+  ],
+  "formations": [
+    {
+      "ecole": "ESIGELEC Rouen",
+      "diplome": "Cycle ingénieur — Big Data pour la Transformation Numérique",
+      "debut": "2024-09",
+      "fin": "2027-06"
+    },
+    {
+      "ecole": "Cycle Préparatoire Père Aupiais — Bénin",
+      "diplome": "Classe préparatoire scientifique aux grandes écoles d'ingénieurs (CPGE)",
+      "debut": "2022-09",
+      "fin": "2024-06"
+    }
+  ],
+  "competences": [
+    {
+      "skill_slug": "python",
+      "nom": "Python",
+      "domaine": "langages-data",
+      "niveau": 4
+    },
+    {
+      "skill_slug": "sql",
+      "nom": "SQL",
+      "domaine": "bases-de-donnees",
+      "niveau": 3
+    },
+    {
+      "skill_slug": "powerbi",
+      "nom": "Power BI",
+      "domaine": "bi",
+      "niveau": 3
+    },
+    {
+      "skill_slug": "spark",
+      "nom": "Spark / PySpark",
+      "domaine": "big-data",
+      "niveau": 3
+    },
+    {
+      "skill_slug": "hadoop",
+      "nom": "Hadoop",
+      "domaine": "big-data",
+      "niveau": 2
+    },
+    {
+      "skill_slug": "machine-learning",
+      "nom": "Machine Learning",
+      "domaine": "ia-ml",
+      "niveau": 3
+    },
+    {
+      "skill_slug": "flask",
+      "nom": "Flask",
+      "domaine": "backend",
+      "niveau": 3
+    },
+    {
+      "skill_slug": "git",
+      "nom": "Git / GitHub",
+      "domaine": "outils",
+      "niveau": 3
+    },
+    {
+      "skill_slug": "html",
+      "nom": "HTML",
+      "domaine": "web-fullstack",
+      "niveau": 3
+    },
+    {
+      "skill_slug": "css",
+      "nom": "CSS",
+      "domaine": "web-fullstack",
+      "niveau": 3
+    },
+    {
+      "skill_slug": "javascript",
+      "nom": "JavaScript",
+      "domaine": "web-fullstack",
+      "niveau": 2
+    },
+    {
+      "skill_slug": "php",
+      "nom": "PHP",
+      "domaine": "web-fullstack",
+      "niveau": 2
+    },
+    {
+      "skill_slug": "mongodb",
+      "nom": "MongoDB",
+      "domaine": "bases-de-donnees",
+      "niveau": 2
+    },
+    {
+       "skill_slug": "neo4j",
+       "nom": "Neo4j",
+       "domaine": "bases-de-donnees",
+       "niveau": 2
+    },
+
+{
+  "skill_slug": "docker",
+  "nom": "Docker",
+  "domaine": "outils",
+  "niveau": 2
+},
+{
+  "skill_slug": "java",
+  "nom": "Java",
+  "domaine": "langages",
+  "niveau": 3
+},
+{
+  "skill_slug": "c",
+  "nom": "Langage C",
+  "domaine": "langages",
+  "niveau": 3
+}
+
+  ],
+  "qualites": [
+  "Curiosité et envie d'apprendre",
+  "Rigueur et persévérance",
+  "Esprit d'équipe",
+  "Adaptabilité",
+  "Sens de l'organisation",
+  "Autonomie"
+],
+"engagements": [
+  "Présidente de l'association ESIG'SOLIDAIRE à l'ESIGELEC",
+  "Organisation d'actions solidaires et d'événements étudiants",
+  "Participation à des projets collaboratifs et associatifs"
+]
+}
