@@ -1,0 +1,24 @@
+[
+  {
+    "projet_slug": "analyse-creances-france",
+    "candidat_slugs": ["ayadjenou-gbedan"],
+    "titre": "Analyse des créances de la France",
+    "contexte": "Projet Data Analysis — ESIGELEC",
+    "description": "Analyse des créances de la France envers les États étrangers (2021–2024) à partir de fichiers CSV : pipeline dbt sur DuckDB (nettoyage, couches staging → intermediate → KPI), dataset consolidé multi-années et dashboard Tableau interactif.",
+    "competences": ["dbt", "duckdb", "sql", "tableau"],
+    "metriques": { "periode_analysee": "2021-2024", "part_apd": "~76 %" },
+    "liens": {},
+    "images": []
+  },
+  {
+    "projet_slug": "prediction-fidelisation-client",
+    "candidat_slugs": ["ayadjenou-gbedan"],
+    "titre": "Prédiction de fidélisation client (e-commerce)",
+    "contexte": "Projet Data Science — ESIGELEC",
+    "description": "Nettoyage et prétraitement d'un dataset e-commerce Kaggle, création d'indicateurs clients (fréquence d'achat, panier moyen, récence), puis comparaison de modèles de classification pour prédire la probabilité de réachat.",
+    "competences": ["python", "scikit-learn"],
+    "metriques": { "transactions_analysees": 500000 },
+    "liens": {},
+    "images": []
+  }
+]

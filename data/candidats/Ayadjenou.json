@@ -1,0 +1,63 @@
+{
+  "candidat_slug": "ayadjenou-gbedan",
+  "prenom": "Manuella",
+  "nom": "Gbedan",
+  "titre": "Data Scientist en alternance chez AGCO · Ingénierie Big Data (ESIGELEC, 2027)",
+  "bio": "En dernière année d'ingénierie Big Data, je transforme des données complexes en tableaux de bord et en décisions concrètes, avec la rigueur et l'endurance acquises en 10 ans de natation en compétition.",
+  "liens": {
+    "github": "https://github.com/Ayadjenou",
+    "linkedin": "https://www.linkedin.com/in/manuella-gbedan-alternance-big-data-scientist-paris/"
+  },
+  "experiences": [
+    {
+      "entreprise": "AGCO Corporation",
+      "poste": "Data Scientist en alternance",
+      "debut": "2026-09",
+      "fin": "2027-08",
+      "description": "Projet FIDADE : analyse des données de tracteurs connectés.",
+      "competences": ["python", "sql", "databricks"]
+    },
+    {
+      "entreprise": "AGCO Corporation",
+      "poste": "Stage technicien long — Data Scientist",
+      "debut": "2026-04",
+      "fin": "2026-08",
+      "description": "Extraction et analyse de données télémétriques de tracteurs via Databricks (SQL), dashboards Tableau et fichiers Excel pour les équipes métiers, formulaire SharePoint automatisé avec Power Automate, harmonisation des signaux inter-marques.",
+      "competences": ["databricks", "sql", "tableau", "excel", "sharepoint", "power-automate"]
+    },
+    {
+      "entreprise": "MTN Bénin (Mobile Telephone Networks)",
+      "poste": "Stage exécutant — Télécommunications",
+      "debut": "2023-08",
+      "fin": "2023-09",
+      "description": "Découverte d'un data center (architecture, hébergement, sécurisation des données), analyse des performances réseau lors de drive tests, suivi des incidents via outils de monitoring.",
+      "competences": []
+    }
+  ],
+  "formations": [
+    { "ecole": "ESIGELEC", "diplome": "Diplôme d'ingénieur — Big Data pour la transformation numérique (BDTN)", "debut": "2024-09", "fin": "2027-06" },
+    { "ecole": "CPPA Bénin", "diplome": "Cycle préparatoire Mathématiques / Physique", "debut": "2022-09", "fin": "2024-06" }
+  ],
+  "competences": [
+    { "skill_slug": "python", "nom": "Python", "domaine": "langages", "niveau": 4 },
+    { "skill_slug": "sql", "nom": "SQL", "domaine": "langages", "niveau": 4 },
+    { "skill_slug": "java", "nom": "Java", "domaine": "langages", "niveau": 2 },
+    { "skill_slug": "c", "nom": "Langage C", "domaine": "langages", "niveau": 2 },
+    { "skill_slug": "mongodb", "nom": "MongoDB", "domaine": "bases-de-donnees", "niveau": 3 },
+    { "skill_slug": "neo4j", "nom": "Neo4j", "domaine": "bases-de-donnees", "niveau": 2 },
+    { "skill_slug": "duckdb", "nom": "DuckDB", "domaine": "bases-de-donnees", "niveau": 2 },
+    { "skill_slug": "scikit-learn", "nom": "Scikit-learn", "domaine": "data-science", "niveau": 3 },
+    { "skill_slug": "dbt", "nom": "dbt", "domaine": "data-engineering", "niveau": 2 },
+    { "skill_slug": "databricks", "nom": "Databricks", "domaine": "data-engineering", "niveau": 3 },
+    { "skill_slug": "powerbi", "nom": "Power BI", "domaine": "visualisation", "niveau": 4 },
+    { "skill_slug": "tableau", "nom": "Tableau", "domaine": "visualisation", "niveau": 3 },
+    { "skill_slug": "excel", "nom": "Excel", "domaine": "visualisation", "niveau": 4 },
+    { "skill_slug": "fastapi", "nom": "FastAPI", "domaine": "developpement", "niveau": 2 },
+    { "skill_slug": "streamlit", "nom": "Streamlit", "domaine": "developpement", "niveau": 2 },
+    { "skill_slug": "docker", "nom": "Docker", "domaine": "outils", "niveau": 2 },
+    { "skill_slug": "github", "nom": "GitHub", "domaine": "outils", "niveau": 3 },
+    { "skill_slug": "sharepoint", "nom": "SharePoint", "domaine": "outils", "niveau": 3 },
+    { "skill_slug": "power-automate", "nom": "Power Automate", "domaine": "outils", "niveau": 3 },
+    { "skill_slug": "canva", "nom": "Canva", "domaine": "design", "niveau": 4 }
+  ]
+}
