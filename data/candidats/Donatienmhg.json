@@ -1,0 +1,57 @@
+{
+  "candidat_slug": "donatien-tovihouande",
+  "prenom": "Donatien",
+  "nom": "Tovihouande",
+  "titre": "Étudiant ingénieur ESIGELEC (Big Data) — Alternant Data Analyst / Développeur BI & Web chez DS Consult",
+  "bio": "Passionné par l'analyse des données, je prépare un diplôme d'ingénieur en Big Data pour la Transformation Numérique à l'ESIGELEC. En alternance chez DS Consult, je conçois des solutions de reporting BI, migre des tableaux de bord QlikView vers Qlik Sense et développe des applications web de saisie. Mon objectif : des reportings fiables et des données de qualité, au service des équipes métier.",
+  "localisation": "Rouen (mobilité nationale)",
+  "liens": {
+    "github": "https://github.com/Donatienmhg",
+    "linkedin": "https://www.linkedin.com/in/donatien-tovihouande-3346a3328",
+    "email": "donatien.tovihouande@groupe-esigelec.org"
+  },
+  "langues": [
+    { "langue": "Français", "niveau": "Natif" },
+    { "langue": "Anglais", "niveau": "B2" },
+    { "langue": "Allemand", "niveau": "A1" },
+    { "langue": "Espagnol", "niveau": "A1" }
+  ],
+  "experiences": [
+    {
+      "entreprise": "DS Consult (Cergy)",
+      "poste": "Data Analyst / Développeur BI & Web (alternance)",
+      "debut": "2025-09",
+      "fin": null,
+      "description": "Conception et maintenance de solutions de reporting BI (CRM, expertise) et de sites web de saisie de formulaires. Migration de tableaux de bord QlikView vers Qlik Sense (écrans interactifs, filtres dynamiques, indicateurs de suivi) et administration des serveurs Qlik (licences, accès, sécurité, alertes de rechargement). Développement d'applications web de saisie connectées à des fichiers de référence (PHP, IIS), documentation fonctionnelle et technique, procédures de test et de validation avant mise en production.",
+      "competences": ["qlik-sense", "qlikview", "sql", "bi", "php", "iis", "data-visualization", "documentation-technique"]
+    },
+    {
+      "entreprise": "MIG Motors SA (Kia)",
+      "poste": "Stagiaire technicien et analyste de données techniques",
+      "debut": "2023-06",
+      "fin": "2023-08",
+      "description": "Diagnostic et analyse de données techniques, traitement et optimisation des informations, collaboration et communication avec les équipes.",
+      "competences": ["gestion-equipe", "entretien-vehicule", "communication"]
+    }
+  ],
+  "formations": [
+    { "ecole": "ESIGELEC Rouen", "diplome": "Cycle ingénieur — Big Data pour la Transformation Numérique (BDTN)", "debut": "2024-09", "fin": "2027-06" },
+    { "ecole": "Cycle préparatoire Père Aupiais", "diplome": "Classe préparatoire — mathématiques, physique, algorithmique", "debut": "2022-09", "fin": "2024-06" }
+  ],
+  "competences": [
+    { "skill_slug": "sql", "nom": "SQL (MySQL, SQLiteStudio, Oracle)", "domaine": "bases-de-donnees", "niveau": 4 },
+    { "skill_slug": "powerbi", "nom": "Power BI", "domaine": "bi", "niveau": 4 },
+    { "skill_slug": "power-query", "nom": "Power Query", "domaine": "bi", "niveau": 3 },
+    { "skill_slug": "dax", "nom": "DAX", "domaine": "bi", "niveau": 3 },
+    { "skill_slug": "qlik-sense", "nom": "Qlik Sense", "domaine": "bi", "niveau": 4 },
+    { "skill_slug": "qlikview", "nom": "QlikView", "domaine": "bi", "niveau": 3 },
+    { "skill_slug": "python", "nom": "Python (Pandas, Matplotlib, Seaborn)", "domaine": "langages-data", "niveau": 3 },
+    { "skill_slug": "java", "nom": "Java", "domaine": "langages", "niveau": 3 },
+    { "skill_slug": "c", "nom": "C", "domaine": "langages", "niveau": 2 },
+    { "skill_slug": "php", "nom": "PHP", "domaine": "web-fullstack", "niveau": 3 },
+    { "skill_slug": "html-css", "nom": "HTML5 / CSS3", "domaine": "frontend", "niveau": 3 },
+    { "skill_slug": "microsoft-365", "nom": "Pack Office (Excel, Word, PowerPoint)", "domaine": "outils", "niveau": 4 }
+  ],
+  "qualites": ["Proactivité", "Rigueur et précision", "Travail en équipe", "Autonomie et prise d'initiative", "Esprit d'analyse et de synthèse"],
+  "engagements": []
+}

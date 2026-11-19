@@ -1,0 +1,41 @@
+[
+  {
+    "projet_slug": "smartcity-explorer",
+    "candidat_slugs": ["donatien-tovihouande", "erwann-nobime", "rayan-marmouri", "andrea-vissoh", "ayadjenou-gbedan"],
+    "titre": "SmartCity Explorer",
+    "contexte": "TP fil rouge NoSQL (projet d'équipe) — ESIGELEC",
+    "date_debut": "2026-11",
+    "date_fin": "2026-11",
+    "description": "Application data-driven de comparaison de villes françaises selon des critères de qualité de vie (environnement, santé, sécurité, transports…) et de recommandation de villes similaires. Architecture NoSQL polyglotte : MongoDB pour les villes (scores imbriqués, pattern embedding) et les avis (referencing + agrégations), Neo4j pour le graphe de similarité, API REST FastAPI asynchrone et frontend Streamlit. Contribution personnelle : seed MongoDB des villes, repository MongoDB des villes (recherche, détail, scores) et service de recherche de villes.",
+    "competences": ["python", "mongodb", "neo4j", "fastapi", "streamlit", "docker"],
+    "metriques": { "villes": 20, "categories_scores": 8 },
+    "liens": {},
+    "images": []
+  },
+  {
+    "projet_slug": "logiciel-gestion-dominantes",
+    "candidat_slugs": ["donatien-tovihouande"],
+    "titre": "Logiciel de gestion des dominantes",
+    "contexte": "Projet Académique Génie Logiciel — ESIGELEC",
+    "date_debut": "2025-09",
+    "date_fin": "2026-01",
+    "description": "Application métier de gestion et d'affectation des étudiants aux dominantes. Création et structuration de la base de données SQL, développement d'interfaces utilisateur en Java, intégration complète entre la couche métier et la base de données, documentation technique du projet.",
+    "competences": ["java", "sql", "oracle-sql", "poo"],
+    "metriques": {},
+    "liens": {},
+    "images": []
+  },
+  {
+    "projet_slug": "dashboard-bancaire-powerbi",
+    "candidat_slugs": ["donatien-tovihouande"],
+    "titre": "Dashboard interactif pour une banque",
+    "contexte": "Projet personnel — autodidacte",
+    "date_debut": "2025-01",
+    "date_fin": "2025-01",
+    "description": "Tableau de bord interactif Power BI pour l'analyse et la visualisation des données clients d'une banque : gestion et préparation des données, indicateurs clés et filtres interactifs.",
+    "competences": ["powerbi", "power-query", "dax", "data-visualization"],
+    "metriques": {},
+    "liens": {},
+    "images": []
+  }
+]
