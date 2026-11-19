@@ -1,99 +1,37 @@
-"""Repository MongoDB pour les projets du portfolio."""
+"""Repository MongoDB — accès unitaires aux projets (routes 4 et hydratation).
+
+Règle : ce module ne parle qu'à MongoDB et renvoie des dict (ou None).
+Les documents suivent le format de ARCHITECTURE.md §3 (conversion faite par le seed).
+
+Les lectures par candidat (R2) et le flux "projets récents" (R8) sont dans
+``mongo_candidats.py`` : elles font partie du parcours candidat et partagent les mêmes
+index. Ce module se limite donc à la lecture par identifiant de projet (R4 et détail).
+"""
 
 from __future__ import annotations
 
 from portfolio_api.db.mongo import get_mongo_db
 
-from portfolio_api.models import ProjetOut
 
-async def get_projet_by_slug(slug: str) -> ProjetOut | None:
-    """Récupère un projet MongoDB à partir de son slug."""
+async def get_projet_by_slug(slug: str) -> dict | None:
+    """Renvoie un projet par son ``projet_slug``, ou ``None`` s'il n'existe pas."""
     db = get_mongo_db()
+    return await db.projets.find_one({"_id": slug}, {"_id": 0})
 
-    document = await db["projets"].find_one(
-        {"projet_slug": slug}
-    )
 
-    if document is None:
-        return None
+async def get_projets_by_slugs(slugs: list[str]) -> list[dict]:
+    """Renvoie plusieurs projets dans l'ordre des slugs demandés.
 
-    document.pop("_id", None)
-    return ProjetOut.model_validate(document)
-
-async def get_projets_by_slugs(slugs: list[str]) -> list[ProjetOut]:
-    """Récupère plusieurs projets MongoDB dans l'ordre des slugs demandés."""
-
+    Utilisé par la Route 4 pour hydrater les projets similaires remontés par Neo4j :
+    Neo4j donne une liste ordonnée de ``projet_slug``, ce repo renvoie les fiches
+    MongoDB dans le même ordre. Les slugs inconnus sont silencieusement ignorés.
+    """
     if not slugs:
         return []
 
     db = get_mongo_db()
+    curseur = db.projets.find({"_id": {"$in": slugs}}, {"_id": 0})
+    documents = await curseur.to_list()
 
-    cursor = db["projets"].find(
-        {"projet_slug": {"$in": slugs}}
-    )
-
-    documents = await cursor.to_list(length=None)
-
-    projets_par_slug = {
-        document["projet_slug"]: ProjetOut.model_validate(document)
-        for document in documents
-    }
-
-    return [
-        projets_par_slug[slug]
-        for slug in slugs
-        if slug in projets_par_slug
-    ]
-async def get_projets_by_candidat(
-    candidat_slug: str,
-    page: int = 1,
-    size: int = 10,
-) -> list[ProjetOut]:
-    """Récupère les projets d'un candidat avec pagination."""
-
-    db = get_mongo_db()
-
-    cursor = (
-        db["projets"]
-        .find({"auteurs": candidat_slug})
-        .sort("date_debut", -1)
-        .skip((page - 1) * size)
-        .limit(size)
-    )
-
-    documents = await cursor.to_list(length=size)
-
-    return [
-        ProjetOut.model_validate(document)
-        for document in documents
-    ]
-async def count_projets_by_candidat(candidat_slug: str) -> int:
-    """Compte le nombre total de projets associés à un candidat."""
-
-    db = get_mongo_db()
-
-    total = await db["projets"].count_documents(
-        {"auteurs": candidat_slug}
-    )
-
-    return total
-async def get_projets_recents(
-    limit: int = 10,
-) -> list[ProjetOut]:
-    """Récupère les projets les plus récents."""
-
-    db = get_mongo_db()
-
-    cursor = (
-        db["projets"]
-        .find({})
-        .sort("date_debut", -1)
-        .limit(limit)
-    )
-
-    documents = await cursor.to_list(length=limit)
-
-    return [
-        ProjetOut.model_validate(document)
-        for document in documents
-    ]
+    projets_par_slug = {doc["projet_slug"]: doc for doc in documents}
+    return [projets_par_slug[slug] for slug in slugs if slug in projets_par_slug]
