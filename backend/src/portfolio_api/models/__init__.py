@@ -1,7 +1,4 @@
-"""Modèles Pydantic — doivent refléter EXACTEMENT les payloads de API_ROUTES.md.
-
-TODO (équipe) : définir CandidatOut, ExperienceOut, FormationOut, ProjetOut, StatsOut, GraphOut…
-"""
+"""Modèles Pydantic — doivent refléter EXACTEMENT les payloads de API_ROUTES.md."""
 
 from __future__ import annotations
 
