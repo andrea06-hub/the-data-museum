@@ -1,0 +1,8 @@
+# Thème Streamlit aux couleurs de ma DA dreamingwith.her
+[theme]
+base = "light"
+primaryColor = "#FF4D6D"
+backgroundColor = "#FFF0F3"
+secondaryBackgroundColor = "#FFE5EC"
+textColor = "#590D22"
+font = "sans serif"
