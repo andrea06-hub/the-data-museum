@@ -1,0 +1,8 @@
+# Déploiement Vercel — dépendances lues depuis la RACINE du repo.
+#
+# Vercel traite la racine du dépôt comme la racine du projet (à cause du
+# pyproject.toml racine qui porte [tool.vercel]). Il installe donc les
+# dépendances depuis ici. On installe le backend complet : pip construit le
+# package portfolio_api (depuis backend/pyproject.toml) ET ses dépendances
+# (fastapi, pymongo, neo4j, pydantic…). Résultat : tout est présent au runtime.
+./backend
