@@ -24,3 +24,9 @@ typing-extensions==4.16.0
 typing-inspection==0.4.5
 uvicorn==0.54.0
 websockets==17.4
+
+# Installe le package local portfolio_api (layout src/) dans site-packages,
+# pour qu'il soit toujours importable au runtime serverless Vercel.
+# Sans ça : ModuleNotFoundError au démarrage de la fonction.
+.
+
