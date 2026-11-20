@@ -6,11 +6,14 @@ Règles d'architecture (ARCHITECTURE.md §5) :
 - Neo4j porte la topologie des relations (projets similaires, graphe de compétences,
   compétences communes et transversales) ;
 - Tout slug remonté par Neo4j sans fiche correspondante dans MongoDB est ignoré.
+
+Convention : chaque fonction renvoie ``dict`` ou ``None``. ``None`` signale une
+ressource introuvable, le router D2 transforme ce ``None`` en ``HTTPException(404)``.
+Les validations de paramètres (min 2 candidats pour R6, bornes de ``limit``…) sont
+assurées par la couche HTTP via ``Query(...)``.
 """
 
 from __future__ import annotations
-
-from fastapi import HTTPException
 
 from portfolio_api.repositories import neo4j_graph
 from portfolio_api.repositories.mongo_candidats import get_candidat
@@ -23,17 +26,15 @@ from portfolio_api.repositories.mongo_projets import (
 # ---------------------------------------------------------------------------
 # R4 : GET /api/graph/projets/{slug}/similaires
 # ---------------------------------------------------------------------------
-async def get_projets_similaires(projet_slug: str, limit: int = 5) -> dict:
+async def get_projets_similaires(projet_slug: str, limit: int = 5) -> dict | None:
     """Orchestre Neo4j (score + compétences communes) et MongoDB (métadonnées projet).
 
-    Lève une 404 si le projet source n'existe pas dans MongoDB.
+    Renvoie ``None`` si le projet source n'existe pas dans MongoDB.
+    Renvoie ``{projet_slug, similaires: []}`` si le projet existe mais n'a aucun similaire.
     """
     projet_source = await get_projet_by_slug(projet_slug)
     if projet_source is None:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Projet '{projet_slug}' introuvable",
-        )
+        return None
 
     raw_similaires = await neo4j_graph.get_similar_projects(projet_slug, limit=limit)
     if not raw_similaires:
@@ -48,7 +49,7 @@ async def get_projets_similaires(projet_slug: str, limit: int = 5) -> dict:
         slug = item["projet_slug"]
         doc = docs_par_slug.get(slug)
         if doc is None:
-            # Gouvernance : on ignore les slugs Neo4j sans fiche MongoDB
+            # Gouvernance §5 : on ignore les slugs Neo4j sans fiche MongoDB
             continue
         similaires.append(
             {
@@ -70,18 +71,15 @@ async def get_projets_similaires(projet_slug: str, limit: int = 5) -> dict:
 # ---------------------------------------------------------------------------
 # R5 : GET /api/graph/competences/{slug}
 # ---------------------------------------------------------------------------
-async def get_graphe_competences(candidat_slug: str) -> dict:
+async def get_graphe_competences(candidat_slug: str) -> dict | None:
     """Construit le graphe ``nodes`` + ``links`` prêt à afficher pour un candidat.
 
-    Lève une 404 si le candidat n'existe pas. Un candidat sans projet renvoie
-    uniquement son nœud et ``links: []``.
+    Renvoie ``None`` si le candidat n'existe pas dans MongoDB. Un candidat sans
+    projet renvoie uniquement son nœud et ``links: []``.
     """
     candidat_mongo = await get_candidat(candidat_slug)
     if candidat_mongo is None:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Candidat '{candidat_slug}' introuvable",
-        )
+        return None
 
     graph_data = await neo4j_graph.get_candidate_graph_rows(candidat_slug)
 
@@ -174,35 +172,20 @@ async def get_graphe_competences(candidat_slug: str) -> dict:
 # ---------------------------------------------------------------------------
 # R6 : GET /api/graph/competences/communes
 # ---------------------------------------------------------------------------
-async def get_competences_communes(candidats_param: str | list[str]) -> dict:
+async def get_competences_communes(candidat_slugs: list[str]) -> dict | None:
     """Retourne les compétences utilisées par tous les candidats listés.
 
-    Lève une 400 s'il y a moins de 2 candidats distincts, et une 404 si l'un des
-    slugs n'existe pas.
+    Renvoie ``None`` si au moins un des slugs n'existe pas dans MongoDB. La
+    validation « au moins 2 candidats distincts » est faite côté router (400),
+    ici on travaille avec la liste déjà dédoublonnée.
     """
-    if isinstance(candidats_param, str):
-        raw_slugs = [s.strip() for s in candidats_param.split(",") if s.strip()]
-    else:
-        raw_slugs = [s.strip() for s in candidats_param if s.strip()]
+    for slug in candidat_slugs:
+        if await get_candidat(slug) is None:
+            return None
 
-    slugs = list(dict.fromkeys(raw_slugs))
-    if len(slugs) < 2:
-        raise HTTPException(
-            status_code=400,
-            detail="Au moins 2 candidats sont requis",
-        )
-
-    for slug in slugs:
-        candidat = await get_candidat(slug)
-        if candidat is None:
-            raise HTTPException(
-                status_code=404,
-                detail=f"Candidat '{slug}' introuvable",
-            )
-
-    communes = await neo4j_graph.get_common_skills(slugs)
+    communes = await neo4j_graph.get_common_skills(candidat_slugs)
     return {
-        "candidats": slugs,
+        "candidats": candidat_slugs,
         "competences_communes": communes,
     }
 
@@ -212,14 +195,13 @@ async def get_competences_communes(candidats_param: str | list[str]) -> dict:
 # ---------------------------------------------------------------------------
 async def get_competences_transversales(
     candidat_slug: str, min_projets: int = 2
-) -> dict:
-    """Retourne les compétences d'un candidat mobilisées sur au moins ``min_projets``."""
-    candidat = await get_candidat(candidat_slug)
-    if candidat is None:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Candidat '{candidat_slug}' introuvable",
-        )
+) -> dict | None:
+    """Retourne les compétences d'un candidat mobilisées sur au moins ``min_projets``.
+
+    Renvoie ``None`` si le candidat n'existe pas dans MongoDB.
+    """
+    if await get_candidat(candidat_slug) is None:
+        return None
 
     competences = await neo4j_graph.get_transversal_skills(
         candidat_slug, min_projets=min_projets
@@ -234,17 +216,15 @@ async def get_competences_transversales(
 # ---------------------------------------------------------------------------
 # R9 : GET /api/competences/{slug}/preuves
 # ---------------------------------------------------------------------------
-async def get_preuves_competence(skill_slug: str) -> dict:
+async def get_preuves_competence(skill_slug: str) -> dict | None:
     """Orchestre Neo4j (candidats + projets liés) et MongoDB (identité + titres).
 
-    Lève une 404 si la compétence n'existe pas dans Neo4j.
+    Renvoie ``None`` si la compétence n'existe pas dans Neo4j (aucun projet ne
+    l'utilise).
     """
     raw_proofs = await neo4j_graph.get_skill_proofs(skill_slug)
     if raw_proofs is None:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Compétence '{skill_slug}' introuvable",
-        )
+        return None
 
     tous_projet_slugs = list(
         dict.fromkeys(
