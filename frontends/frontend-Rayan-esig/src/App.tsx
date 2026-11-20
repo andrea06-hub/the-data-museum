@@ -1,9 +1,17 @@
-﻿import { useCallback, useEffect, useMemo, useState } from 'react'
+﻿import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import {
   ArrowLeft,
   ArrowUpRight,
   Briefcase,
   Code2,
+  Command,
   ExternalLink,
   FolderGit2,
   GitBranch,
@@ -16,6 +24,7 @@ import {
   User,
   Users,
   Wifi,
+  X,
 } from 'lucide-react'
 import { api } from './api/client'
 import {
@@ -36,6 +45,11 @@ import type {
 } from './types/api'
 
 type AppId = 'profil' | 'projets' | 'graphe' | 'terminal'
+
+interface IconPosition {
+  x: number
+  y: number
+}
 
 interface AppDefinition {
   id: AppId
@@ -88,6 +102,28 @@ function getInitialRect(index: number): WindowRect {
   return clampRectToViewport({ x, y, width, height })
 }
 
+function getInitialIconPositions(): Record<AppId, IconPosition> {
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 1280
+  const startX = Math.max(20, vw - 124)
+  return {
+    profil: { x: startX, y: 24 },
+    projets: { x: startX, y: 136 },
+    graphe: { x: startX, y: 248 },
+    terminal: { x: startX, y: 360 },
+  }
+}
+
+function clampIconPosition(pos: IconPosition): IconPosition {
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 1280
+  const vh = typeof window !== 'undefined' ? window.innerHeight : 800
+  const maxX = Math.max(12, vw - 108)
+  const maxY = Math.max(12, vh - 196)
+  return {
+    x: Math.min(Math.max(12, pos.x), maxX),
+    y: Math.min(Math.max(12, pos.y), maxY),
+  }
+}
+
 function formatPeriod(debut?: string | null, fin?: string | null) {
   if (!debut) return ''
   const start = debut.slice(0, 7)
@@ -113,6 +149,25 @@ function useClock() {
 export default function App() {
   const clock = useClock()
 
+  // Carte Identité (affichée au clic sur le nom en haut à gauche)
+  const [showIdentity, setShowIdentity] = useState(false)
+
+  // Positions déplaçables des icônes du bureau
+  const [iconPositions, setIconPositions] = useState<Record<AppId, IconPosition>>(() =>
+    getInitialIconPositions(),
+  )
+  const [draggingIconId, setDraggingIconId] = useState<AppId | null>(null)
+  const iconDragRef = useRef<{
+    id: AppId
+    pointerId: number
+    startX: number
+    startY: number
+    originX: number
+    originY: number
+    moved: boolean
+  } | null>(null)
+  const suppressIconClickRef = useRef<AppId | null>(null)
+
   // Gestion des fenêtres (ouvertes, réduites, ordre d'empilement z-index, dimensions)
   const [openApps, setOpenApps] = useState<AppId[]>(['profil'])
   const [minimizedApps, setMinimizedApps] = useState<AppId[]>([])
@@ -125,7 +180,7 @@ export default function App() {
     terminal: getInitialRect(3),
   }))
 
-  // Recadrer les fenêtres si la fenêtre du navigateur est redimensionnée
+  // Recadrer les fenêtres et les icônes si le navigateur est redimensionné
   useEffect(() => {
     const onResize = () => {
       setWindowRects((prev) => ({
@@ -133,6 +188,12 @@ export default function App() {
         projets: clampRectToViewport(prev.projets),
         graphe: clampRectToViewport(prev.graphe),
         terminal: clampRectToViewport(prev.terminal),
+      }))
+      setIconPositions((prev) => ({
+        profil: clampIconPosition(prev.profil),
+        projets: clampIconPosition(prev.projets),
+        graphe: clampIconPosition(prev.graphe),
+        terminal: clampIconPosition(prev.terminal),
       }))
     }
     window.addEventListener('resize', onResize)
@@ -178,6 +239,55 @@ export default function App() {
     [focusApp],
   )
 
+  const handleIconPointerDown = (e: ReactPointerEvent<HTMLButtonElement>, id: AppId) => {
+    if (e.button !== 0) return
+    e.currentTarget.setPointerCapture(e.pointerId)
+    const origin = iconPositions[id]
+    iconDragRef.current = {
+      id,
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: origin.x,
+      originY: origin.y,
+      moved: false,
+    }
+  }
+
+  const handleIconPointerMove = (e: ReactPointerEvent<HTMLButtonElement>) => {
+    const drag = iconDragRef.current
+    if (!drag || drag.pointerId !== e.pointerId) return
+    const dx = e.clientX - drag.startX
+    const dy = e.clientY - drag.startY
+
+    if (!drag.moved && Math.hypot(dx, dy) > 5) {
+      drag.moved = true
+      setDraggingIconId(drag.id)
+    }
+
+    if (drag.moved) {
+      setIconPositions((prev) => ({
+        ...prev,
+        [drag.id]: clampIconPosition({
+          x: drag.originX + dx,
+          y: drag.originY + dy,
+        }),
+      }))
+    }
+  }
+
+  const handleIconPointerUp = (e: ReactPointerEvent<HTMLButtonElement>, id: AppId) => {
+    const drag = iconDragRef.current
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    }
+    if (drag?.id === id && drag.moved) {
+      suppressIconClickRef.current = id
+    }
+    iconDragRef.current = null
+    setDraggingIconId(null)
+  }
+
   // Données API
   const [slug, setSlug] = useState<string>(DEFAULT_SLUG)
   const [teamSlugs, setTeamSlugs] = useState<string[]>([DEFAULT_SLUG])
@@ -202,7 +312,7 @@ export default function App() {
 
   const [error, setError] = useState<string | null>(null)
 
-  // Raccourci Échap pour fermer la sous-vue ou la fenêtre au premier plan
+  // Raccourci Échap pour fermer la sous-vue, la fenêtre active ou la carte Identité
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -210,12 +320,14 @@ export default function App() {
           setActiveProjet(null)
         } else if (focusedApp) {
           closeApp(focusedApp)
+        } else if (showIdentity) {
+          setShowIdentity(false)
         }
       }
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [activeProjet, focusedApp, closeApp])
+  }, [activeProjet, focusedApp, showIdentity, closeApp])
 
   // R8 : Projets récents & membres de l'équipe
   useEffect(() => {
@@ -330,10 +442,21 @@ export default function App() {
     >
       {/* ==================== BARRE DES MENUS MACOS ==================== */}
       <header className="z-50 flex h-8 shrink-0 select-none items-center justify-between border-b border-black/[0.06] bg-white/65 px-4 text-xs backdrop-blur-2xl">
-        <div className="flex items-center gap-4">
-          <span className="font-semibold tracking-tight text-[#1d1d1f]">
-             {candidat ? `${candidat.prenom} ${candidat.nom}` : 'Portfolio OS'}
-          </span>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setShowIdentity((prev) => !prev)}
+            title="Afficher ou masquer la carte Identité"
+            className={`inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 font-semibold tracking-tight transition ${
+              showIdentity
+                ? 'bg-[#0071e3]/12 text-[#0071e3]'
+                : 'text-[#1d1d1f] hover:bg-black/[0.06]'
+            }`}
+          >
+            <Command className="h-3.5 w-3.5 text-[#0071e3]" />
+            <span>{candidat ? `${candidat.prenom} ${candidat.nom}` : 'Portfolio OS'}</span>
+          </button>
+
           {activeAppMeta && (
             <span className="font-semibold text-[#1d1d1f]">{activeAppMeta.title}</span>
           )}
@@ -377,13 +500,25 @@ export default function App() {
 
       {/* ==================== ESPACE DU BUREAU ==================== */}
       <main className="relative flex-1 overflow-hidden p-5 sm:p-7">
-        {/* Widgets posés sur le bureau (gauche) */}
-        <div className="flex max-w-xs select-none flex-col gap-4">
-          {candidat && (
+        {/* Carte Identité (affichée au clic sur le nom en haut à gauche) */}
+        <div className="relative z-10 flex max-w-xs select-none flex-col gap-4">
+          {showIdentity && candidat && (
             <div
               onClick={() => openApp('profil')}
-              className="cursor-pointer rounded-3xl border border-white/70 bg-white/65 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.05)] backdrop-blur-2xl transition hover:scale-[1.01] hover:bg-white/80"
+              className="animate-window-open relative cursor-pointer rounded-3xl border border-white/80 bg-white/80 p-5 shadow-[0_12px_36px_rgba(0,0,0,0.09)] backdrop-blur-2xl transition hover:bg-white/95"
             >
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setShowIdentity(false)
+                }}
+                aria-label="Fermer la carte Identité"
+                className="absolute right-3.5 top-3.5 rounded-full bg-black/[0.05] p-1 text-[#6e6e73] transition hover:bg-black/10 hover:text-[#1d1d1f]"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+
               <p className="text-[11px] font-semibold uppercase tracking-wider text-[#0071e3]">
                 Identité
               </p>
@@ -413,30 +548,50 @@ export default function App() {
           )}
         </div>
 
-        {/* Icônes d'applications sur le bureau (colonne de droite façon macOS) */}
-        <div className="absolute right-5 top-5 z-10 flex select-none flex-col gap-5 sm:right-8 sm:top-7">
-          {APPS.map((app) => {
-            const Icon = app.icon
-            const isOpen = openApps.includes(app.id)
-            return (
-              <button
-                key={app.id}
-                onClick={() => openApp(app.id)}
-                className="group flex w-24 flex-col items-center gap-1.5 rounded-2xl p-2 text-center transition hover:bg-white/35 focus:outline-none"
+        {/* Icônes d'applications déplaçables sur le bureau */}
+        {APPS.map((app) => {
+          const Icon = app.icon
+          const isOpen = openApps.includes(app.id)
+          const pos = iconPositions[app.id]
+          const isDragging = draggingIconId === app.id
+
+          return (
+            <button
+              key={app.id}
+              type="button"
+              onPointerDown={(e) => handleIconPointerDown(e, app.id)}
+              onPointerMove={handleIconPointerMove}
+              onPointerUp={(e) => handleIconPointerUp(e, app.id)}
+              onPointerCancel={(e) => handleIconPointerUp(e, app.id)}
+              onClick={() => {
+                if (suppressIconClickRef.current === app.id) {
+                  suppressIconClickRef.current = null
+                  return
+                }
+                openApp(app.id)
+              }}
+              style={{
+                left: `${pos.x}px`,
+                top: `${pos.y}px`,
+              }}
+              className={`group absolute flex w-24 select-none flex-col items-center gap-1.5 rounded-2xl p-2 text-center touch-none focus:outline-none ${
+                isDragging
+                  ? 'z-30 cursor-grabbing scale-105 bg-white/45 shadow-lg backdrop-blur-md'
+                  : 'z-10 cursor-grab transition-colors hover:bg-white/35'
+              }`}
+            >
+              <div
+                className={`relative flex h-14 w-14 items-center justify-center rounded-[16px] bg-gradient-to-br ${app.gradient} text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)] ring-1 ring-white/40 transition-transform duration-200 group-hover:scale-105`}
               >
-                <div
-                  className={`relative flex h-14 w-14 items-center justify-center rounded-[16px] bg-gradient-to-br ${app.gradient} text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)] ring-1 ring-white/40 transition-transform duration-200 group-hover:scale-105 group-active:scale-95`}
-                >
-                  <Icon className="h-7 w-7 stroke-[1.9]" />
-                </div>
-                <span className="rounded-md px-1.5 py-0.5 text-[11px] font-medium text-[#1d1d1f] drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] group-hover:bg-[#0071e3] group-hover:text-white group-hover:drop-shadow-none">
-                  {app.title}
-                </span>
-                {isOpen && <span className="h-1 w-1 rounded-full bg-[#1d1d1f]/60" />}
-              </button>
-            )
-          })}
-        </div>
+                <Icon className="h-7 w-7 stroke-[1.9]" />
+              </div>
+              <span className="rounded-md px-1.5 py-0.5 text-[11px] font-medium text-[#1d1d1f] drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] group-hover:bg-[#0071e3] group-hover:text-white group-hover:drop-shadow-none">
+                {app.title}
+              </span>
+              {isOpen && <span className="h-1 w-1 rounded-full bg-[#1d1d1f]/60" />}
+            </button>
+          )
+        })}
 
         {/* ==================== FENÊTRES D'APPLICATIONS ==================== */}
         {openApps.map((appId) => {
