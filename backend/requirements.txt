@@ -1,0 +1,26 @@
+# Dépendances backend pour le déploiement Vercel (runtime Python).
+# Généré depuis uv.lock — garde les versions alignées avec pyproject.toml.
+# Régénérer : uv export --no-hashes --no-dev --no-emit-project --format requirements-txt
+annotated-doc==0.0.6
+annotated-types==0.8.0
+anyio==4.16.0
+click==8.5.1
+dnspython==2.9.2
+fastapi==0.163.1
+h11==0.16.0
+httptools==0.9.0
+idna==3.20
+neo4j==6.4.1
+opentelemetry-api==1.45.2
+pydantic==2.14.3
+pydantic-core==2.50.4
+pydantic-settings==2.16.3
+pymongo==4.20.0
+python-dotenv==1.2.4
+pytz==2026.6
+pyyaml==6.0.3
+starlette==1.10.0
+typing-extensions==4.16.0
+typing-inspection==0.4.5
+uvicorn==0.54.0
+websockets==17.4
