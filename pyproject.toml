@@ -1,0 +1,11 @@
+# Configuration de déploiement Vercel (lue depuis la RACINE du repo).
+#
+# L'étape de détection du point d'entrée FastAPI de Vercel tourne à la racine
+# du dépôt et lit ce fichier (pas backend/pyproject.toml). Sans ça, Vercel
+# trouve une variable `app` dans plusieurs fichiers (shim + module + tests)
+# et refuse de deviner lequel servir.
+#
+# Ce fichier ne sert QU'À Vercel. Le vrai projet Python reste backend/pyproject.toml.
+
+[tool.vercel]
+entrypoint = "backend.main:app"
