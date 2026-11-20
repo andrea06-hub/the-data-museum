@@ -1,0 +1,9 @@
+[project]
+name = "frontend-ayadjenou"
+version = "0.1.0"
+description = "Frontend personnel de Manuella Gbedan (Streamlit) — Portfolio Polyglotte"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit>=1.40",
+    "requests>=2.31",
+]
