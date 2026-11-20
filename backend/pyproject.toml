@@ -21,12 +21,6 @@ dev = [
     "httpx>=0.26",
 ]
 
-[tool.vercel]
-# Point d'entrée FastAPI explicite pour le déploiement Vercel.
-# Sans ça, Vercel trouve 'app' dans plusieurs fichiers (shim + module + tests)
-# et ne sait pas lequel servir. Pointe le shim backend/main.py.
-entrypoint = "backend.main:app"
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
