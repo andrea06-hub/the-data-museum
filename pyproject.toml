@@ -1,11 +1,30 @@
 # Configuration de déploiement Vercel (lue depuis la RACINE du repo).
 #
-# L'étape de détection du point d'entrée FastAPI de Vercel tourne à la racine
-# du dépôt et lit ce fichier (pas backend/pyproject.toml). Sans ça, Vercel
-# trouve une variable `app` dans plusieurs fichiers (shim + module + tests)
-# et refuse de deviner lequel servir.
-#
-# Ce fichier ne sert QU'À Vercel. Le vrai projet Python reste backend/pyproject.toml.
+# Vercel traite la racine du dépôt comme la racine du projet : il lit CE fichier
+# pour (1) trouver le point d'entrée FastAPI et (2) installer les dépendances.
+# On déclare donc ici les dépendances runtime ET on fait construire le package
+# portfolio_api (qui vit dans backend/src/). Le vrai projet de dev reste
+# backend/pyproject.toml ; ce fichier ne sert qu'au déploiement.
+
+[project]
+name = "portfolio-api"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "pydantic>=2.5",
+    "pydantic-settings>=2.1",
+    "pymongo>=4.13",
+    "neo4j>=5.15",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend/src/portfolio_api"]
 
 [tool.vercel]
 entrypoint = "backend.main:app"
