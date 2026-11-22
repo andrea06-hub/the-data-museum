@@ -4,10 +4,19 @@ Mon portfolio aux couleurs de mon univers **dreamingwith.her** (rose, girly-chic
 
 - **Techno** : [Streamlit](https://streamlit.io/) (Python) pour appeler l'API + une page HTML/CSS/JavaScript pour la mise en page et les animations, et [force-graph](https://github.com/vasturiano/force-graph) pour le graphe interactif
 - **`app.py`** : appelle les routes de l'API et rassemble les données (aucune donnée en dur)
-- **`portfolio.html`** : mise en page, animations, post-it déplaçables, polaroïds, graphe ; il n'affiche que les données transmises par `app.py`
-- **`avatar.png`** : mon avatar (intégré dans la page par `app.py`)
+- **`site/index.html`** : mise en page, animations, post-it déplaçables, polaroïds, graphe ; il n'affiche que des données venues de l'API
+- **`site/avatar.png`** : mon avatar
+- **`site/vercel.json`** : configuration de la version en ligne (relais des appels `/api/...` vers le backend d'équipe)
 
-## Lancer le frontend
+## Version en ligne (Vercel)
+
+🌸 **Portfolio en ligne : _(lien à ajouter après déploiement)_**
+
+- Le dossier `site/` est déployé tel quel sur Vercel (Root Directory = `frontends/frontend-Ayadjenou/site`, Framework Preset = *Other*, aucune commande de build).
+- Dans cette version, c'est le JavaScript qui appelle lui-même les routes `/api/...` (avec `fetch`, en parallèle grâce à `Promise.all`).
+- `vercel.json` relaie ces appels vers le backend d'équipe déployé (`https://2026-2027-rouen-portfolio-akatsuki.vercel.app`) : le navigateur ne parle qu'au domaine du portfolio, donc pas de problème de CORS.
+
+## Lancer le frontend en local
 
 Prérequis : l'API d'équipe tourne sur http://localhost:8000 (voir [`backend/README.md`](../../backend/README.md) : `just up`, `just seed`, `just dev`).
 
