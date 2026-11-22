@@ -2,7 +2,7 @@
 
 Répartition du travail :
   - app.py (ce fichier, Python) : appelle l'API d'équipe et rassemble les données.
-  - portfolio.html (HTML/CSS/JavaScript) : la mise en page rose et girly, les animations
+  - site/index.html (HTML/CSS/JavaScript) : la mise en page rose et girly, les animations
     et le graphe interactif. Il ne contient AUCUNE donnée : il affiche ce que
     app.py lui transmet.
 
@@ -38,9 +38,11 @@ import streamlit.components.v1 as components  # solution de repli pour les ancie
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 # Mon identifiant pivot, le même dans MongoDB et dans Neo4j
 CANDIDAT_SLUG = os.getenv("CANDIDAT_SLUG", "ayadjenou-gbedan")
-# Le gabarit HTML de la page et mon avatar, rangés à côté de ce fichier
-GABARIT = Path(__file__).with_name("portfolio.html")
-AVATAR = Path(__file__).with_name("avatar.png")
+# La page (site/index.html) et mon avatar, rangés dans le dossier site/.
+# Ce même dossier est déployé tel quel sur Vercel pour la version en ligne.
+SITE = Path(__file__).with_name("site")
+GABARIT = SITE / "index.html"
+AVATAR = SITE / "avatar.png"
 
 st.set_page_config(page_title="Manuella Gbedan — Portfolio", page_icon="🌸", layout="wide")
 
