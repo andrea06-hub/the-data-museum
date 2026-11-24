@@ -169,7 +169,6 @@ if (finished) {
   }
 }
 
-renderer.render(scene, camera)
 frameId = requestAnimationFrame(animate)
     }
 

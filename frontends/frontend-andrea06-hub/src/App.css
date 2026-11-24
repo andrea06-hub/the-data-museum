@@ -422,3 +422,1882 @@
     transition: none;
   }
 }
+
+/* =========================================
+   THE JOURNEY — GALERIE CONTEMPORAINE
+   ========================================= */
+
+/* Mise en page de la galerie uniquement */
+.exhibition-placeholder:has(.journey-gallery) {
+  justify-content: flex-start;
+  padding: 55px 24px 100px;
+  gap: 32px;
+  background: linear-gradient(
+    180deg,
+    #080d16 0%,
+    #111b29 55%,
+    #080d16 100%
+  );
+}
+
+/* Grand titre de l'exposition */
+.exhibition-placeholder:has(.journey-gallery) > h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(42px, 6vw, 76px);
+  letter-spacing: 5px;
+  text-align: center;
+}
+
+/* Contenu principal */
+.journey-gallery {
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.journey-gallery .museum-label {
+  text-align: center;
+  font-size: 12px;
+  color: #b3c3d1;
+  margin-bottom: 36px;
+}
+
+/* Identité */
+.journey-gallery > h3 {
+  font-family: Georgia, serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400;
+  color: #f5f1e9;
+  margin: 0 0 12px;
+}
+
+.journey-gallery > h3 + p {
+  color: #aebfcd;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Cartel de présentation */
+.journey-gallery > p:last-of-type {
+  background: #131e2b;
+  border: 1px solid #354454;
+  border-left: 3px solid #a8b9c8;
+  padding: 28px 32px;
+  color: #d4dde5;
+  font-size: 15px;
+  line-height: 1.85;
+  text-align: left;
+}
+
+/* Timeline */
+.journey-timeline {
+  position: relative;
+  margin-top: 65px;
+  margin-left: 8px;
+  padding-left: 32px;
+  border-left: 1px solid #536576;
+}
+
+.journey-timeline > h3 {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: #b9c8d4;
+  margin: 0 0 30px;
+}
+
+/* Cartes d'exposition */
+.timeline-item {
+  position: relative;
+  background: #111b27;
+  border: 1px solid #344353;
+  border-radius: 2px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -39px;
+  top: 34px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #b9c8d4;
+  border: 2px solid #111b27;
+}
+
+.timeline-item:hover {
+  transform: translateY(-3px);
+  border-color: #8497a8;
+}
+
+/* Dates */
+.timeline-date {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #b8c7d4;
+  margin-bottom: 14px;
+}
+
+/* Poste */
+.timeline-item h4 {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #f5f1e9;
+  margin: 0 0 8px;
+}
+
+/* Entreprise et description */
+.timeline-item p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #b7c5d2;
+  margin: 8px 0;
+  text-align: left;
+}
+
+/* Adaptation mobile */
+@media (max-width: 600px) {
+  .journey-gallery > p:last-of-type {
+    padding: 20px;
+  }
+
+  .journey-timeline {
+    padding-left: 20px;
+  }
+
+  .timeline-item {
+    padding: 22px;
+  }
+
+  .timeline-item::before {
+    left: -27px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-item {
+    transition: none;
+  }
+}
+
+/* THE JOURNEY — Museum refinement */
+
+.journey-timeline > h3 {
+  color: #c9b99a;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  margin-bottom: 35px;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 36px 42px;
+  margin-bottom: 28px;
+
+  background: linear-gradient(
+    135deg,
+    #182431 0%,
+    #101a26 100%
+  );
+
+  border: 1px solid rgba(197, 205, 214, 0.2);
+  border-radius: 0;
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.timeline-item:hover {
+  transform: none;
+  border-color: rgba(201, 185, 154, 0.55);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-item::before {
+  background: #c9b99a;
+  border: 2px solid #101a26;
+  box-shadow: 0 0 0 4px #101a26;
+}
+
+.timeline-date {
+  color: #c9b99a;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.timeline-item h4 {
+  font-family: Georgia, serif;
+  font-size: clamp(22px, 2.5vw, 28px);
+  color: #f3eee6;
+  line-height: 1.35;
+}
+
+.timeline-item p {
+  color: #b8c5d0;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  .timeline-item {
+    padding: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-item {
+    transition: none;
+  }
+}
+
+
+/* THE JOURNEY — Elegant museum frames */
+
+.journey-gallery .timeline-item {
+
+
+  background:
+    radial-gradient(
+      ellipse 70% 65% at 50% 0%,
+      rgba(185, 205, 225, 0.18) 0%,
+      rgba(120, 155, 190, 0.06) 55%,
+      transparent 100%
+    ),
+   #101b27;
+
+  border: 2px solid #8193a3;
+  border-radius: 0;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(220, 230, 240, 0.12),
+    0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.journey-gallery .timeline-item::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(220, 230, 240, 0.12);
+  pointer-events: none;
+}
+
+/* THE JOURNEY — Museum plaques */
+
+.museum-exhibit {
+  margin-bottom: 45px;
+}
+
+.museum-exhibit .timeline-item {
+  margin-bottom: 0;
+}
+
+.museum-plaque {
+  width: fit-content;
+  max-width: 100%;
+  min-width: 220px;
+  margin: 16px auto 0;
+  padding: 14px 28px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+
+  background: linear-gradient(135deg, #202b35, #131e29);
+  border: 1px solid rgba(190, 200, 210, 0.4);
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.plaque-number {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #c9b99a;
+}
+
+.museum-plaque strong {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #f3eee6;
+}
+
+.plaque-detail {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: #aebfcd;
+}
+
+/* THE JOURNEY — Exhibition introduction */
+
+.exhibition-placeholder:has(.journey-gallery) > h1 {
+  font-size: clamp(36px, 5vw, 58px);
+  letter-spacing: 6px;
+  line-height: 1.15;
+}
+
+.journey-gallery .museum-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+  margin-bottom: 45px;
+}
+
+.journey-gallery > h3 {
+  font-size: clamp(32px, 4vw, 46px);
+  margin-bottom: 16px;
+}
+
+.journey-gallery > h3 + p {
+  max-width: 780px;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 35px;
+}
+
+.journey-gallery > p:last-of-type {
+  max-width: 820px;
+  padding: 30px 36px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(24, 38, 54, 0.8),
+    rgba(16, 27, 39, 0.35)
+  );
+
+  border: none;
+  border-left: 2px solid #a8b9c8;
+
+  font-size: 14px;
+  line-height: 2;
+  box-shadow: none;
+}
+
+/* THE JOURNEY — Discover my story */
+
+.journey-read-more {
+  display: block;
+  margin: 16px 0 0;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  color: #c9b99a;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.journey-read-more:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.journey-read-more:focus-visible {
+  outline: 2px solid #c9b99a;
+  outline-offset: 4px;
+}
+
+/* =========================================
+   THE COLLECTION — PROJECT EXHIBITION
+   ========================================= */
+
+.exhibition-placeholder:has(.collection-gallery) {
+  justify-content: flex-start;
+  padding: 55px 24px 100px;
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      #23364a 0%,
+      transparent 55%
+    ),
+    #080d16;
+}
+
+.collection-gallery {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.collection-gallery .museum-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+  margin-bottom: 30px;
+}
+
+.collection-gallery .collection-intro {
+  max-width: 650px;
+  margin: 0 auto 30px;
+  font-family: Georgia, serif;
+  font-size: 23px;
+  font-style: italic;
+  line-height: 1.6;
+  color: #e7e5e0;
+}
+
+.collection-gallery .collection-count {
+  margin-bottom: 50px;
+  color: #c9b99a;
+  font-size: 11px;
+  letter-spacing: 4px;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 55px 40px;
+}
+
+.collection-exhibit {
+  min-width: 0;
+}
+
+.collection-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+  min-height: 290px;
+  padding: 40px 30px;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(135, 180, 220, 0.23),
+      transparent 70%
+    ),
+    #101b27;
+
+  border: 3px solid #8193a3;
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 30px rgba(0, 0, 0, 0.4),
+    0 20px 40px rgba(0, 0, 0, 0.35);
+
+  cursor: pointer;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.collection-frame::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(220, 230, 240, 0.18);
+  pointer-events: none;
+}
+
+.collection-frame:hover,
+.collection-frame[aria-expanded="true"] {
+  border-color: #c9b99a;
+  box-shadow: 0 0 30px rgba(140, 185, 230, 0.15);
+}
+
+.collection-frame:focus-visible {
+  outline: 2px solid #c9b99a;
+  outline-offset: 5px;
+}
+
+.collection-number {
+  font-family: Georgia, serif;
+  font-size: 52px;
+  font-weight: 400;
+  color: #c9b99a;
+  opacity: 0.65;
+}
+
+.collection-artwork {
+  font-family: Georgia, serif;
+  font-size: clamp(21px, 2.5vw, 29px);
+  line-height: 1.4;
+  color: #f3eee6;
+}
+
+.collection-discover {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #c9b99a;
+}
+
+.collection-plaque {
+  width: fit-content;
+  max-width: 100%;
+  margin: 18px auto 0;
+  padding: 15px 22px;
+  background: linear-gradient(135deg, #202b35, #131e29);
+  border: 1px solid rgba(190, 200, 210, 0.4);
+}
+
+.collection-skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.collection-skills span {
+  padding: 5px 9px;
+  border: 1px solid #45576a;
+  color: #c5d5e5;
+  font-size: 11px;
+}
+
+.collection-details {
+  margin-top: 20px;
+  padding: 25px;
+  border-left: 2px solid #c9b99a;
+  background: rgba(20, 31, 44, 0.75);
+  text-align: left;
+}
+
+.collection-details h3 {
+  margin: 0 0 20px;
+  color: #c9b99a;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.collection-details p {
+  color: #c5d0db;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.collection-details .collection-authors {
+  color: #c9b99a;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.collection-details a {
+  display: inline-block;
+  margin: 12px 15px 0 0;
+  color: #8cc8ff;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .collection-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .collection-frame {
+    min-height: 250px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-frame {
+    transition: none;
+  }
+}
+
+/* =========================================
+   THE CONNECTIONS — KNOWLEDGE GRAPH
+   ========================================= */
+
+.exhibition-placeholder:has(.connections-gallery) {
+  justify-content: flex-start;
+  padding: 55px 24px 100px;
+  background:
+    radial-gradient(
+      ellipse at 50% 35%,
+      #162c43,
+      transparent 65%
+    ),
+    #080d16;
+}
+
+.connections-gallery {
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+.connections-gallery .museum-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+}
+
+.connections-gallery .connections-intro {
+  font-family: Georgia, serif;
+  font-size: 23px;
+  font-style: italic;
+  color: #e7e5e0;
+  line-height: 1.6;
+}
+
+.connections-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 750px;
+  margin: 45px auto;
+}
+
+.connections-stats > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+}
+
+.connections-stats > div + div {
+  border-left: 1px solid #405064;
+}
+
+.connections-stats strong {
+  font-family: Georgia, serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 400;
+  color: #c9b99a;
+}
+
+.connections-stats span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #b7c9df;
+}
+
+.connections-graph {
+  padding: 25px;
+  border: 1px solid #536576;
+  background: rgba(8, 15, 25, 0.65);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.connections-graph .connections-instruction {
+  font-size: 13px;
+  color: #aebfcd;
+  margin-bottom: 30px;
+}
+
+.connections-scroll {
+  overflow-x: auto;
+}
+
+.connections-svg {
+  display: block;
+  width: 100%;
+  min-width: 760px;
+  height: auto;
+}
+
+.graph-heading {
+  fill: #c9b99a;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-anchor: middle;
+}
+
+.graph-edge {
+  fill: none;
+  stroke: #527fa6;
+  stroke-width: 1.3;
+  opacity: 0.5;
+  transition: opacity 0.25s, stroke 0.25s;
+}
+
+.graph-edge.highlighted {
+  stroke: #8cc8ff;
+  stroke-width: 2.5;
+  opacity: 1;
+  filter: drop-shadow(0 0 4px #75baff);
+}
+
+.graph-skill {
+  cursor: pointer;
+}
+
+.graph-skill rect {
+  fill: #152536;
+  stroke: #45617a;
+  transition: fill 0.25s, stroke 0.25s;
+}
+
+.graph-skill text {
+  fill: #e5edf5;
+  font-size: 13px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.graph-skill.transversal rect {
+  stroke: #c9b99a;
+  stroke-width: 1.5;
+}
+
+.graph-skill:hover rect,
+.graph-skill:focus-visible rect,
+.graph-skill.selected rect {
+  fill: #24496b;
+  stroke: #8cc8ff;
+  stroke-width: 2;
+}
+
+.graph-project rect {
+  fill: #152536;
+  stroke: #8193a3;
+  stroke-width: 1.5;
+}
+
+.graph-project.connected rect {
+  stroke: #8cc8ff;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 5px #376c9c);
+}
+
+.graph-project-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #f3eee6;
+  text-align: center;
+}
+
+.graph-skill,
+.graph-project {
+  transition: opacity 0.25s;
+}
+
+.graph-skill.dimmed,
+.graph-project.dimmed {
+  opacity: 0.25;
+}
+
+.graph-edge.dimmed {
+  opacity: 0.07;
+}
+
+.connections-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.connections-legend span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #b7c9df;
+  font-size: 11px;
+}
+
+.connections-legend i {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #8193a3;
+  background: #152536;
+}
+
+.connections-legend .legend-transversal {
+  border-color: #c9b99a;
+}
+
+.connections-details {
+  margin-top: 35px;
+  padding: 30px;
+  text-align: left;
+  background: #131e29;
+  border-left: 2px solid #c9b99a;
+}
+
+.connections-details h3 {
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #f3eee6;
+}
+
+.connections-details p {
+  font-size: 14px;
+}
+
+.connections-related-project {
+  padding: 15px 0;
+  border-bottom: 1px solid #344353;
+  color: #d4dde5;
+  font-size: 15px;
+}
+
+@media (max-width: 700px) {
+  .connections-graph {
+    padding: 12px;
+  }
+
+  .connections-stats > div {
+    padding: 8px;
+  }
+
+  .connections-stats span {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+}
+
+/* =========================================
+   THE EXIT — IMMERSIVE CONTACT ROOM
+   ========================================= */
+
+.hall-exit-button {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+
+  padding: 12px 28px;
+  border: 1px solid #75baff;
+  border-radius: 30px;
+  background: rgba(5, 12, 22, 0.85);
+  color: white;
+
+  font-size: 12px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.hall-exit-button:hover {
+  box-shadow: 0 0 25px rgba(117, 186, 255, 0.5);
+}
+
+.exit-room {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #050b13;
+}
+
+.exit-scene {
+  position: relative;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.exit-background {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ZONES INTERACTIVES */
+
+.exit-hotspot {
+  position: absolute;
+  display: block;
+  padding: 0;
+  margin: 0;
+
+  background: transparent;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.exit-hotspot:hover {
+  background: rgba(117, 186, 255, 0.07);
+  box-shadow:
+    0 0 20px rgba(117, 186, 255, 0.5),
+    inset 0 0 15px rgba(117, 186, 255, 0.12);
+}
+
+.exit-hotspot:focus-visible {
+  outline: 2px solid #8cc8ff;
+  outline-offset: 4px;
+}
+
+.exit-hotspot[aria-disabled="true"] {
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Texte accessible sans modifier la maquette */
+
+.exit-hotspot span,
+.exit-mobile-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* POSITION DES QUATRE BOUTONS */
+
+.exit-contact,
+.exit-download,
+.exit-linkedin,
+.exit-github {
+  top: 49.6%;
+  width: 12.4%;
+  height: 17.7%;
+}
+
+.exit-contact {
+  left: 22.6%;
+}
+
+.exit-download {
+  left: 37.2%;
+}
+
+.exit-linkedin {
+  left: 51.5%;
+}
+
+.exit-github {
+  left: 65.6%;
+}
+
+/* RETOUR AU MUSÉE */
+
+.exit-return {
+  top: 72.4%;
+  left: 39.9%;
+  width: 20.4%;
+  height: 6.6%;
+  border-radius: 50px;
+}
+
+/* NAVIGATION SUPÉRIEURE */
+
+.exit-nav-home,
+.exit-nav-galleries,
+.exit-nav-about {
+  top: 1.5%;
+  height: 5%;
+  border-radius: 5px;
+}
+
+.exit-nav-home {
+  left: 69.5%;
+  width: 5.5%;
+}
+
+.exit-nav-galleries {
+  left: 76.5%;
+  width: 6.8%;
+}
+
+.exit-nav-about {
+  left: 85%;
+  width: 9%;
+}
+
+.exit-status {
+  padding: 12px;
+  color: #b7c9df;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* VERSION MOBILE */
+
+@media (max-width: 700px) {
+  .exit-scene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 45px 24px;
+
+    background: radial-gradient(
+      ellipse at top,
+      #193a59,
+      #050b13 70%
+    );
+  }
+
+  .exit-background {
+    display: none;
+  }
+
+  .exit-mobile-heading {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    text-align: center;
+    font-family: Georgia, serif;
+    color: white;
+    margin-bottom: 25px;
+  }
+
+  .exit-mobile-heading h1 {
+    font-size: 42px;
+    letter-spacing: 5px;
+  }
+
+  .exit-mobile-heading em {
+    color: #4bbcff;
+  }
+
+  .exit-mobile-heading h2 {
+    font-size: 25px;
+    font-weight: 400;
+  }
+
+  .exit-hotspot {
+    position: static;
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    padding: 20px;
+
+    border: 1px solid #75baff;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    background: rgba(15, 30, 48, 0.7);
+  }
+
+  .exit-hotspot span {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+
+  .exit-nav-home,
+  .exit-nav-galleries,
+  .exit-nav-about {
+    display: none;
+  }
+
+  .exit-return {
+    margin-top: 20px;
+    border-radius: 50px;
+  }
+
+  .hall-exit-button {
+    font-size: 9px;
+    padding: 8px 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exit-hotspot {
+    transition: none;
+  }
+}
+
+/* =========================================
+   THE COLLECTION — CONNECTED WORKS
+   ========================================= */
+
+.related-projects {
+  width: 100%;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(117, 186, 255, 0.2);
+}
+
+.related-toggle {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #527da8;
+  border-radius: 6px;
+  background: rgba(70, 130, 190, 0.08);
+  color: #9bcaff;
+  font-size: 11px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.related-toggle:hover {
+  background: rgba(70, 130, 190, 0.2);
+  box-shadow: 0 0 20px rgba(75, 170, 255, 0.2);
+}
+
+.related-content {
+  margin-top: 25px;
+  text-align: left;
+}
+
+.related-content h3 {
+  color: #c9ae78;
+  font-family: Georgia, serif;
+  letter-spacing: 3px;
+}
+
+.related-intro {
+  color: #aebfd2;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.related-card {
+  padding: 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(117, 186, 255, 0.25);
+  border-left: 3px solid #75baff;
+  border-radius: 5px;
+  background: rgba(20, 40, 65, 0.6);
+}
+
+.related-card h4 {
+  margin: 10px 0 15px;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: normal;
+  color: #f1f5fa;
+}
+
+.related-score {
+  color: #c9ae78;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.related-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.related-skills span {
+  padding: 5px 12px;
+  border: 1px solid rgba(117, 186, 255, 0.3);
+  border-radius: 20px;
+  background: rgba(117, 186, 255, 0.08);
+  color: #9bcaff;
+  font-size: 12px;
+}
+
+.related-source {
+  margin-top: 20px;
+  color: #8fa5bd;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-align: right;
+}
+/* =========================================
+   THE COLLECTION — PANORAMIC GALLERY
+   ========================================= */
+
+.collection-gallery {
+  max-width: 1450px;
+  min-width: 0;
+}
+
+.collection-gallery .collection-count {
+  margin-bottom: 30px;
+}
+
+/* Galerie panoramique */
+
+.collection-panorama {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.collection-grid {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 28px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 15px 8px 25px;
+
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+
+  scrollbar-width: thin;
+  scrollbar-color: #9e9075 #15202c;
+}
+
+/* Chaque tableau conserve sa taille */
+
+.collection-exhibit {
+  flex: 0 0 clamp(270px, 32%, 380px);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+/* Cadres de dimensions identiques */
+
+.collection-frame {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  align-items: center;
+
+  width: 100%;
+  height: 290px;
+  min-height: 0;
+
+  padding: 25px 22px;
+  gap: 16px;
+}
+
+.collection-number {
+  font-size: 44px;
+}
+
+.collection-artwork {
+  font-size: clamp(20px, 2vw, 25px);
+  overflow-wrap: anywhere;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.collection-discover {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+/* Cadre sélectionné */
+
+.collection-frame[aria-expanded="true"] {
+  border-color: #dfc28a;
+
+  box-shadow:
+    0 0 22px rgba(223, 194, 138, 0.22),
+    inset 0 0 30px rgba(223, 194, 138, 0.05);
+}
+
+/* Plaques sous les tableaux */
+
+.collection-plaque {
+  width: 100%;
+  min-height: 115px;
+  padding: 15px 12px;
+  margin-top: 18px;
+}
+
+/* Flèches de navigation */
+
+.gallery-arrow {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #8193a3;
+  border-radius: 50%;
+
+  background: #131e2b;
+  color: #e5edf5;
+
+  font-size: 30px;
+  line-height: 1;
+  padding: 0;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gallery-arrow:hover {
+  border-color: #c9b99a;
+  color: #dfc28a;
+
+  box-shadow: 0 0 18px rgba(223, 194, 138, 0.2);
+}
+
+.gallery-arrow:focus-visible {
+  outline: 2px solid #8cc8ff;
+  outline-offset: 3px;
+}
+
+.collection-gallery .collection-scroll-hint {
+  margin: 20px 0 35px;
+  color: #8193a3;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+/* Panneau indépendant sous la galerie */
+
+.collection-details {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 35px;
+
+  width: 100%;
+  margin: 30px auto 0;
+  padding: 35px;
+
+  border: 1px solid #354454;
+  border-left: 3px solid #c9b99a;
+
+  background: linear-gradient(
+    135deg,
+    #182431,
+    #101a26
+  );
+
+  animation: collectionDetailsReveal 0.4s ease both;
+}
+
+.collection-detail-title {
+  font-family: Georgia, serif;
+  font-size: clamp(23px, 3vw, 32px);
+  font-weight: 400;
+  line-height: 1.4;
+  color: #f3eee6;
+  margin: 0 0 20px;
+}
+
+.collection-description {
+  min-width: 0;
+}
+
+.collection-related-panel {
+  min-width: 0;
+  padding-left: 30px;
+  border-left: 1px solid #405064;
+}
+
+.collection-related-panel .related-projects {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+/* Animation du panneau */
+
+@keyframes collectionDetailsReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Adaptation mobile */
+
+@media (max-width: 700px) {
+
+  .collection-panorama {
+    gap: 8px;
+  }
+
+  .collection-grid {
+    gap: 18px;
+  }
+
+  .collection-exhibit {
+    flex-basis: min(90%, 320px);
+  }
+
+  .collection-frame {
+    height: 270px;
+    padding: 20px 15px;
+  }
+
+  .gallery-arrow {
+    flex-basis: 28px;
+    width: 28px;
+    height: 28px;
+    font-size: 22px;
+  }
+
+  .collection-details {
+    grid-template-columns: 1fr;
+    padding: 22px;
+    gap: 25px;
+  }
+
+  .collection-related-panel {
+    padding-left: 0;
+    padding-top: 25px;
+    border-left: none;
+    border-top: 1px solid #405064;
+  }
+
+  .collection-gallery .collection-scroll-hint {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .collection-grid {
+    scroll-behavior: auto;
+  }
+
+  .collection-details {
+    animation: none;
+  }
+
+  .gallery-arrow {
+    transition: none;
+  }
+}
+/* Interactive related projects */
+
+.related-card-clickable {
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.related-card-clickable:hover {
+  background: #1c3048;
+  border-color: #75baff;
+  box-shadow: 0 0 20px rgba(117, 186, 255, 0.15);
+}
+
+.related-card-clickable:focus-visible {
+  outline: 2px solid #75baff;
+  outline-offset: 4px;
+}
+
+.related-card-title {
+  display: block;
+  margin: 10px 0 15px;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: normal;
+  color: #f1f5fa;
+}
+
+.related-card-discover {
+  display: block;
+  margin-top: 18px;
+  color: #9bcaff;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+/* ========================================
+   MAIN HALL — MOBILE VERSION
+======================================== */
+
+.mobile-hall {
+  display: none;
+}
+
+@media (max-width: 700px) {
+
+  .main-hall {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+    background: radial-gradient(
+      ellipse at top,
+      #192f46,
+      #080e17 65%
+    );
+  }
+
+  .main-hall .hall-scene {
+    display: none;
+  }
+
+  .mobile-hall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 50px 25px;
+    box-sizing: border-box;
+  }
+
+  .mobile-hall-label {
+    color: #b8c8d9;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-align: center;
+  }
+
+  .mobile-hall-title {
+    font-family: Georgia, serif;
+    font-size: 42px;
+    letter-spacing: 3px;
+    color: #f3f3f3;
+    margin: 20px 0 10px;
+  }
+
+  .mobile-hall-title em {
+    color: #75baff;
+  }
+
+  .mobile-hall-subtitle {
+    font-family: Georgia, serif;
+    font-style: italic;
+    color: #b8c8d9;
+    text-align: center;
+    line-height: 1.7;
+    font-size: 15px;
+    margin-bottom: 35px;
+  }
+
+  .mobile-artworks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    width: 100%;
+  }
+
+  .mobile-artwork {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .mobile-artwork img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 25px rgba(75, 170, 255, 0.15);
+  }
+
+  .mobile-artwork:focus-visible {
+    outline: 2px solid #75baff;
+    outline-offset: 5px;
+  }
+
+  .mobile-hall > .enter-button {
+    margin-top: 40px;
+  }
+}
+/* MAIN HALL — INTERACTIVE NAVIGATION */
+
+.hall-navigation {
+  position: absolute;
+  top: 1%;
+  right: 1.6%;
+  width: 23.5%;
+  height: 6%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr 0.6fr;
+  z-index: 20;
+}
+
+.hall-navigation > button,
+.hall-info summary {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  list-style: none;
+}
+
+.hall-info summary::-webkit-details-marker {
+  display: none;
+}
+
+.hall-navigation > button:hover,
+.hall-info summary:hover {
+  background: rgba(117, 186, 255, 0.1);
+}
+
+.hall-navigation > button:focus-visible,
+.hall-info summary:focus-visible {
+  outline: 2px solid #75baff;
+}
+
+.hall-info {
+  position: relative;
+  height: 100%;
+}
+
+.hall-info-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 300px;
+  padding: 25px;
+  border: 1px solid #527da8;
+  border-radius: 8px;
+  background: #101c2b;
+  color: #dce8f5;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+.hall-info-panel h3 {
+  color: #75baff;
+  font-family: Georgia, serif;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.hall-info-panel p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+/* THE EXIT — INTERACTIVE NAVIGATION */
+
+.exit-nav-info {
+  position: absolute;
+  top: 3.8%;
+  left: 97.2%;
+  transform: translate(-50%, -50%);
+  width: 2.5%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #c7d3df;
+  border-radius: 50%;
+  background: #080e17;
+  color: #f1f5fa;
+  font-family: Georgia, serif;
+  font-size: clamp(12px, 1.4vw, 22px);
+  cursor: pointer;
+  z-index: 20;
+}
+
+.exit-nav-info:hover {
+  border-color: #75baff;
+  color: #75baff;
+  box-shadow: 0 0 15px rgba(117, 186, 255, 0.4);
+}
+
+.exit-nav-info:focus-visible {
+  outline: 2px solid #75baff;
+  outline-offset: 3px;
+}
+
+.exit-menu {
+  position: absolute;
+  top: 7%;
+  width: 250px;
+  padding: 12px;
+  border: 1px solid #527da8;
+  border-radius: 8px;
+  background: #101c2b;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+  color: #e1eaf4;
+  z-index: 30;
+  text-align: left;
+}
+
+.exit-menu-galleries {
+  right: 15%;
+}
+
+.exit-menu-about {
+  right: 5%;
+}
+
+.exit-menu-info {
+  right: 2%;
+  width: 290px;
+  padding: 25px;
+}
+
+.exit-menu button,
+.exit-menu a {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: #e1eaf4;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.exit-menu button:hover,
+.exit-menu a:hover {
+  background: rgba(117, 186, 255, 0.12);
+  color: #75baff;
+}
+
+.exit-menu-info h3 {
+  color: #75baff;
+  font-family: Georgia, serif;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.exit-menu-info p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 700px) {
+  .exit-nav-info,
+  .exit-menu {
+    display: none;
+  }
+}
+/* ========================================
+   THE CONNECTIONS — MOBILE NAVIGATION
+======================================== */
+
+.connections-mobile-navigation,
+.connections-mobile-hint,
+.connections-mobile-selection {
+  display: none;
+}
+
+@media (max-width: 700px) {
+
+  .connections-gallery {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .connections-graph {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 20px 12px;
+  }
+
+  .connections-mobile-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .connections-mobile-navigation button {
+    flex: 1;
+    padding: 12px 8px;
+    border: 1px solid #527da8;
+    border-radius: 25px;
+    background: #142438;
+    color: #9bcaff;
+    font-size: 10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
+
+  .connections-mobile-navigation button:hover {
+    background: #203c57;
+    border-color: #75baff;
+  }
+
+  .connections-mobile-selection {
+    display: block;
+    color: #75baff;
+    font-size: 12px;
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  .connections-scroll {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #527da8 #101a26;
+  }
+
+  .connections-scroll .connections-svg {
+    display: block;
+    width: 760px;
+    min-width: 760px;
+    max-width: none;
+    height: auto;
+  }
+
+  .connections-mobile-hint {
+    display: block;
+    margin: 20px 0;
+    text-align: center;
+    color: #9bb2ca;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .connections-legend {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .connections-details {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+  }
+}
