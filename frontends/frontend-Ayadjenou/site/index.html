@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 3 polices max (règle de ma DA) : Playfair Display (titres), Allura (manuscrite), DM Sans (texte) -->
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<!-- force-graph : graphe interactif (zoom, glisser, survol, clic) -->
+<script src="https://unpkg.com/force-graph@1.47.4/dist/force-graph.min.js"></script>
+<style>
+/* ── Palette dreamingwith.her v2 ── */
+:root {
+  --blush:#FFF0F3; --soft:#FFE5EC; --petal:#FFCCD5; --cherry-blossom:#FFB3C1; --petal-pink:#FF8FAB;
+  --bordeaux:#590D22; --cherry:#A4133C; --amaranth:#800F2F;
+  --bubblegum:#FF4D6D; --rouge:#FB6F92; --cream:#FFF8F3; --gold:#F0B65C;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+/* laisse de la place à la barre de navigation quand on arrive sur une section */
+[id] { scroll-margin-top:96px; }
+body { background:var(--blush); color:var(--bordeaux); font-family:'DM Sans',sans-serif; overflow-x:hidden;
+  /* petits pois roses discrets en fond */
+  background-image:radial-gradient(var(--petal) 1.2px, transparent 1.2px); background-size:22px 22px; }
+.script { font-family:'Allura',cursive; font-weight:400; }
+.serif { font-family:'Playfair Display',serif; }
+.wrap { max-width:1200px; margin:0 auto; padding:0 26px; }
+
+/* ── Barre de navigation en pilule ── */
+nav { position:sticky; top:12px; z-index:20; margin:12px auto 0; max-width:1200px; padding:0 26px; }
+.pilule { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; background:rgba(255,229,236,.85);
+  backdrop-filter:blur(8px); border:2px solid var(--cherry-blossom); border-radius:999px; padding:8px 10px 8px 22px; box-shadow:0 8px 24px -14px var(--cherry); }
+.logo { font-family:'Allura',cursive; font-size:2rem; color:var(--cherry); line-height:1; }
+.liens a { text-decoration:none; color:var(--bordeaux); font-weight:500; padding:8px 14px; border-radius:999px; transition:all .25s; font-size:.92rem; }
+.liens a:hover { background:var(--bubblegum); color:#fff; }
+
+/* ── Héros ── */
+.hero { display:grid; grid-template-columns:1.25fr 1fr; gap:20px; align-items:center; padding:30px 0 10px; }
+.hello { font-family:'Allura',cursive; font-size:clamp(2.4rem,5vw,3.8rem); color:var(--rouge); line-height:1; transform:rotate(-4deg); display:inline-block; }
+.nom { font-family:'Playfair Display',serif; font-weight:900; text-transform:uppercase; line-height:.9; font-size:clamp(3rem,8.5vw,6.6rem); letter-spacing:-.02em; }
+.nom span { display:inline-block; opacity:0; transform:translateY(40px) rotate(6deg); animation:lettre .7s cubic-bezier(.2,.9,.2,1.2) forwards; }
+.nom .l2 span { color:var(--cherry); }
+@keyframes lettre { to { opacity:1; transform:none; } }
+.titre { display:inline-block; margin:16px 0; background:var(--bordeaux); color:var(--soft); padding:8px 18px; border-radius:999px; font-weight:500; transform:rotate(-1.5deg); }
+.papier { position:relative; background:var(--cream); padding:22px 24px 20px; border-radius:4px; box-shadow:0 10px 30px -16px var(--cherry); transform:rotate(.8deg); max-width:560px; line-height:1.7; }
+/* scotch « washi tape » en haut des papiers */
+.scotch::before { content:''; position:absolute; top:-12px; left:50%; width:110px; height:26px; transform:translateX(-50%) rotate(-3deg);
+  background:repeating-linear-gradient(45deg, rgba(255,143,171,.75) 0 8px, rgba(255,204,213,.75) 8px 16px); }
+.boutons { display:flex; gap:12px; margin-top:22px; flex-wrap:wrap; }
+.btn { border:none; cursor:pointer; text-decoration:none; font-family:'DM Sans',sans-serif; font-weight:700; padding:13px 24px; border-radius:999px; font-size:.95rem; transition:transform .2s, box-shadow .2s; }
+.btn:hover { transform:translateY(-3px) scale(1.03); }
+.btn.plein { background:var(--bubblegum); color:#fff; box-shadow:0 10px 22px -10px var(--bubblegum); }
+.btn.vide { background:#fff; color:var(--cherry); border:2px solid var(--cherry); }
+
+/* Avatar dans une forme organique qui ondule */
+.scene { position:relative; height:540px; display:flex; align-items:flex-end; justify-content:center; }
+.blob { position:absolute; width:400px; height:400px; bottom:40px; background:linear-gradient(135deg,var(--cherry-blossom),var(--petal-pink));
+  border-radius:58% 42% 55% 45% / 45% 55% 45% 55%; animation:onduler 9s ease-in-out infinite; }
+@keyframes onduler { 50% { border-radius:42% 58% 40% 60% / 60% 40% 60% 40%; transform:rotate(8deg) scale(1.04); } }
+.vichy { position:absolute; width:150px; height:150px; right:4%; top:6%; border-radius:50%; opacity:.9;
+  background:repeating-linear-gradient(0deg, rgba(255,77,109,.35) 0 14px, transparent 14px 28px), repeating-linear-gradient(90deg, rgba(255,77,109,.35) 0 14px, transparent 14px 28px), #fff; }
+.avatar { position:relative; height:520px; cursor:pointer; filter:drop-shadow(0 14px 18px rgba(89,13,34,.25)); animation:flotter 5s ease-in-out infinite; z-index:2; }
+@keyframes flotter { 50% { transform:translateY(-10px); } }
+.sticker { position:absolute; z-index:3; background:#fff; border:2px solid var(--bordeaux); border-radius:999px; padding:8px 14px; font-weight:700; font-size:.85rem;
+  box-shadow:4px 4px 0 var(--bordeaux); animation:balancer 4s ease-in-out infinite; white-space:nowrap; }
+.sticker b { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--bubblegum); margin-right:4px; }
+@keyframes balancer { 50% { transform:rotate(4deg) translateY(-6px); } }
+.etoile { position:absolute; color:var(--gold); font-size:1.6rem; animation:scintiller 2.4s ease-in-out infinite; z-index:3; pointer-events:none; }
+@keyframes scintiller { 50% { opacity:.25; transform:scale(.6) rotate(45deg); } }
+
+/* ── Bandeau défilant « scroll-stopper » ── */
+.ticker { background:var(--bubblegum); transform:rotate(-1.5deg); margin:40px -20px; overflow:hidden; border-top:3px solid var(--bordeaux); border-bottom:3px solid var(--bordeaux); }
+.ticker-piste { display:inline-flex; white-space:nowrap; animation:defile 35s linear infinite; padding:12px 0; }
+.ticker:hover .ticker-piste { animation-play-state:paused; }
+.ticker-piste span { color:#fff; font-family:'Playfair Display',serif; font-style:italic; font-weight:700; font-size:1.35rem; padding:0 18px; }
+.ticker-piste span::after { content:'♡'; margin-left:36px; font-style:normal; }
+@keyframes defile { to { transform:translateX(-50%); } }
+
+/* ── Titres de section ── */
+section { padding:46px 0 10px; }
+.sur-titre { font-family:'Allura',cursive; font-size:2.4rem; color:var(--rouge); line-height:1; }
+h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2rem,4.5vw,3.2rem); line-height:1; margin-bottom:22px; }
+h2 em { color:var(--cherry); }
+.apparait { opacity:0; transform:translateY(30px); transition:all .8s cubic-bezier(.2,.8,.2,1); }
+.apparait.vue { opacity:1; transform:none; }
+
+/* ── Post-it des compétences (déplaçables) ── */
+.tableau { position:relative; min-height:280px; background:var(--soft); border-radius:28px; border:2px dashed var(--cherry-blossom); padding:24px; display:flex; flex-wrap:wrap; gap:16px; align-content:flex-start; }
+.postit { width:150px; min-height:118px; padding:14px 12px; cursor:grab; user-select:none; box-shadow:0 10px 16px -10px rgba(89,13,34,.45);
+  transition:box-shadow .2s; position:relative; touch-action:none; }
+.postit:active { cursor:grabbing; box-shadow:0 22px 30px -14px rgba(89,13,34,.55); z-index:5; }
+.postit .nomc { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; }
+.postit .nb { font-family:'Allura',cursive; font-size:1.6rem; color:var(--cherry); }
+.chere-moi { position:absolute; right:22px; bottom:18px; font-family:'Allura',cursive; font-size:2rem; color:var(--cherry); transform:rotate(-5deg); pointer-events:none; text-align:right; line-height:1.1; }
+
+/* ── Parcours : pages de journal ── */
+.parcours { display:grid; grid-template-columns:1.4fr 1fr; gap:34px; }
+.page-journal { position:relative; background:var(--cream); padding:26px 24px 20px 54px; margin-bottom:26px; border-radius:6px;
+  box-shadow:0 12px 26px -18px var(--cherry); line-height:1.75;
+  /* lignes de cahier + marge rose */
+  background-image:linear-gradient(90deg, transparent 38px, var(--petal-pink) 38px, var(--petal-pink) 40px, transparent 40px),
+                   repeating-linear-gradient(transparent 0 27px, var(--petal) 27px 28px); }
+.page-journal:nth-child(odd) { transform:rotate(-.6deg); }
+.page-journal:nth-child(even) { transform:rotate(.6deg); }
+.page-journal:hover { transform:rotate(0) scale(1.01); transition:transform .3s; }
+.date-script { font-family:'Allura',cursive; font-size:1.8rem; color:var(--rouge); line-height:1; }
+.poste { font-family:'Playfair Display',serif; font-weight:700; font-size:1.3rem; }
+.lieu { color:var(--cherry); font-weight:500; }
+.badge { display:inline-block; background:var(--bubblegum); color:#fff; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:3px 10px; border-radius:999px; margin-bottom:6px; }
+.diplome { background:#fff; border:2px solid var(--cherry-blossom); border-radius:20px; padding:18px; margin-bottom:16px; transition:transform .25s; }
+.diplome:hover { transform:translateY(-4px) rotate(-1deg); }
+.langues { display:flex; flex-wrap:wrap; gap:8px; }
+.langues span { background:var(--petal); padding:6px 14px; border-radius:999px; font-weight:500; }
+
+/* ── Projets : mur de polaroïds ── */
+.filtres { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; }
+.filtres button { border:2px solid var(--bordeaux); background:#fff; color:var(--bordeaux); border-radius:999px; padding:7px 15px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:all .2s; }
+.filtres button:hover { background:var(--petal); }
+.filtres button.actif { background:var(--bordeaux); color:var(--soft); box-shadow:3px 3px 0 var(--bubblegum); }
+.mur { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:34px 26px; }
+.polaroid { position:relative; background:#fff; padding:14px 14px 18px; cursor:pointer; box-shadow:0 14px 28px -16px rgba(89,13,34,.5);
+  transition:transform .35s cubic-bezier(.2,.9,.2,1.2), box-shadow .35s; animation:apparition .6s ease both; }
+.polaroid:hover { transform:rotate(0) translateY(-10px) scale(1.04) !important; box-shadow:0 26px 40px -18px rgba(89,13,34,.6); z-index:4; }
+.photo { height:160px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.photo .initiale { font-family:'Playfair Display',serif; font-weight:900; font-size:5.5rem; color:rgba(255,255,255,.92); transition:transform .4s; }
+.polaroid:hover .initiale { transform:scale(1.15) rotate(-6deg); }
+.photo .coeur { position:absolute; right:10px; top:8px; color:#fff; font-size:1.3rem; }
+.legende-pola { font-family:'Allura',cursive; font-size:1.9rem; line-height:1.05; margin-top:12px; color:var(--bordeaux); }
+.mots { font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--cherry); margin-top:8px; line-height:1.6; }
+@keyframes apparition { from { opacity:0; transform:translateY(24px); } to { opacity:1; } }
+
+/* ── Constellation (graphe) ── */
+.constellation { display:grid; grid-template-columns:1.6fr 1fr; gap:24px; }
+#graphe { height:560px; border-radius:28px; overflow:hidden; border:2px solid var(--cherry-blossom); background:var(--soft); position:relative; }
+.legende-g { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:12px; font-weight:500; }
+.rond { display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+.encart { background:#fff; border-radius:22px; padding:20px; border:2px solid var(--petal); margin-bottom:18px; }
+.encart h3 { font-family:'Allura',cursive; font-weight:400; font-size:2.1rem; color:var(--cherry); line-height:1; margin-bottom:8px; }
+.sim { padding:10px 0; border-bottom:1px dashed var(--cherry-blossom); animation:apparition .45s ease both; }
+.sim:last-child { border-bottom:none; }
+.sim b { font-family:'Playfair Display',serif; font-size:1.05rem; }
+.vide { font-style:italic; color:var(--cherry); }
+.incontournable { display:flex; justify-content:space-between; align-items:center; background:var(--soft); border-radius:999px; padding:8px 16px; margin:8px 0; font-weight:500; }
+.incontournable span { font-family:'Allura',cursive; font-size:1.5rem; color:var(--bubblegum); }
+
+/* ── Pied de page ── */
+footer { margin-top:60px; background:var(--bordeaux); color:var(--soft); padding:46px 0 34px; text-align:center; }
+footer .citation { font-family:'Allura',cursive; font-size:clamp(2rem,4vw,3rem); line-height:1.15; margin-bottom:18px; }
+footer a { color:var(--petal-pink); margin:0 10px; font-weight:700; }
+
+/* ── Fenêtre « page de journal » pour un projet ── */
+.voile { position:fixed; inset:0; background:rgba(89,13,34,.55); display:none; align-items:center; justify-content:center; z-index:50; padding:18px; }
+.voile.ouvert { display:flex; animation:apparition .3s ease both; }
+.modale { position:relative; background:var(--cream); max-width:680px; width:100%; max-height:88vh; overflow:auto; padding:36px 36px 28px; border-radius:10px; }
+.modale h3 { font-family:'Playfair Display',serif; font-weight:900; font-size:2.2rem; line-height:1.05; margin:4px 0 10px; }
+.modale p { line-height:1.75; margin:12px 0; }
+.modale .resultat { font-family:'Allura',cursive; font-size:1.9rem; color:var(--cherry); }
+.modale a { color:var(--bubblegum); font-weight:700; margin-right:14px; }
+.fermer { position:absolute; right:14px; top:10px; border:none; background:var(--bubblegum); color:#fff; width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer; }
+
+/* Paillettes qui suivent la souris + cœurs qui éclatent au clic sur l'avatar */
+.paillette, .confetti { position:fixed; pointer-events:none; z-index:60; font-size:14px; animation:tomber 1s ease-out forwards; }
+@keyframes tomber { to { opacity:0; transform:translateY(26px) scale(.4) rotate(90deg); } }
+.confetti { font-size:22px; animation:exploser 1.2s ease-out forwards; }
+@keyframes exploser { to { opacity:0; transform:translate(var(--dx), var(--dy)) rotate(var(--r)) scale(.6); } }
+
+/* ── Responsive ── */
+@media (max-width:860px) {
+  .hero, .parcours, .constellation { grid-template-columns:1fr; }
+  .scene { height:430px; } .avatar { height:410px; } .blob { width:300px; height:300px; }
+  .liens { display:none; }
+}
+</style>
+</head>
+<body>
+
+<nav><div class="pilule">
+  <span class="logo" id="logo"></span>
+  <div class="liens"><a href="#accueil">Accueil</a><a href="#parcours">Mon parcours</a><a href="#projets">Mes projets</a><a href="#constellation">Ma constellation</a></div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="btn vide" id="paillettes" style="padding:8px 14px" title="Activer / désactiver les paillettes">✦ Paillettes</button>
+    <a class="btn plein" href="#contact" style="padding:10px 18px">Me contacter ♡</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <!-- ── Accueil (R1 + R3) ── -->
+  <div class="hero" id="accueil">
+    <div>
+      <span class="hello">Hello, moi c'est</span>
+      <div class="nom"><div class="l1" id="prenom"></div><div class="l2" id="nom"></div></div>
+      <div class="titre" id="titre"></div>
+      <div class="papier scotch" id="bio"></div>
+      <div class="boutons"><a class="btn plein" href="#projets">Voir mes projets ✦</a><a class="btn vide" href="#parcours">Mon parcours</a></div>
+    </div>
+    <div class="scene" id="scene">
+      <div class="vichy"></div><div class="blob"></div>
+      <img class="avatar" id="avatar" alt="Mon avatar" title="Clique-moi ♡">
+    </div>
+  </div>
+</div>
+
+<div class="ticker"><div class="ticker-piste" id="ticker"></div></div>
+
+<div class="wrap">
+  <!-- ── Compétences en post-it (R3) ── -->
+  <section class="apparait">
+    <div class="sur-titre">ce que je sais faire</div>
+    <h2>Mes <em>compétences</em></h2>
+    <div class="tableau" id="tableau"><div class="chere-moi">Chère moi,<br>on va réussir, point final.</div></div>
+    <p style="margin-top:10px;font-style:italic;color:var(--cherry)">Psst… les post-it se déplacent ✦</p>
+  </section>
+
+  <!-- ── Parcours (R1) ── -->
+  <section id="parcours" class="apparait">
+    <div class="sur-titre">mon journal</div>
+    <h2>Mon <em>parcours</em></h2>
+    <div class="parcours">
+      <div id="experiences"></div>
+      <div><div id="formations"></div><div class="langues" id="langues"></div></div>
+    </div>
+  </section>
+
+  <!-- ── Projets (R2 + R3) ── -->
+  <section id="projets" class="apparait">
+    <div class="sur-titre">mon mur d'inspiration</div>
+    <h2>Mes <em>projets</em></h2>
+    <div class="filtres" id="filtres"></div>
+    <div class="mur" id="mur"></div>
+  </section>
+
+  <!-- ── Constellation (R5 + R4 + R7) ── -->
+  <section id="constellation" class="apparait">
+    <div class="sur-titre">tout est lié</div>
+    <h2>Ma <em>constellation</em></h2>
+    <div class="legende-g">
+      <span><i class="rond" style="background:var(--bordeaux)"></i>Moi</span>
+      <span><i class="rond" style="background:var(--bubblegum)"></i>Mes projets</span>
+      <span><i class="rond" style="background:var(--gold)"></i>Compétences</span>
+    </div>
+    <div class="constellation">
+      <div><div id="graphe"></div><p style="margin-top:8px;font-style:italic;color:var(--cherry)">Glisse, zoome, survole… et clique sur un projet rose ♡</p></div>
+      <div>
+        <div class="encart"><h3>Ça te plaira aussi</h3><div id="similaires"><p class="vide">Clique sur un projet du graphe pour voir les projets qui lui ressemblent.</p></div></div>
+        <div class="encart"><h3>Mes incontournables</h3><div id="transversales"></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="citation">Le futur appartient à ceux qui croient<br>en la beauté de leurs rêves ✦</div>
+    <div id="contacts"></div>
+  </div>
+</footer>
+
+<div class="voile" id="voile"><div class="modale scotch" id="modale"></div></div>
+
+<!-- Version Streamlit : app.py remplace le repère ci-dessous par les données (JSON).
+     Version en ligne (Vercel) : le repère reste tel quel et la page appelle elle-même l'API. -->
+<script id="donnees" type="application/json">__DATA__</script>
+
+<!-- Écran de chargement, retiré dès que les données sont affichées -->
+<div id="chargement" style="position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:#FFF0F3;font-family:'Allura',cursive;font-size:2.6rem;color:#A4133C">Chargement de mon univers ✦</div>
+
+<script>
+// Aucune donnée de portfolio n'est écrite en dur ici : tout vient de l'API d'équipe.
+const CANDIDAT_SLUG = "ayadjenou-gbedan";   // mon identifiant pivot (MongoDB + Neo4j)
+
+// ── Récupération des données ──
+// 1) Version Streamlit : les données ont déjà été récupérées par app.py et injectées dans la page.
+// 2) Version en ligne : la page appelle les routes /api/... ; Vercel les relaie vers le backend
+//    d'équipe (voir vercel.json), donc pas de souci de CORS.
+async function chargerDonnees() {
+  const brut = document.getElementById("donnees").textContent.trim();
+  if (brut.startsWith("{")) return JSON.parse(brut);
+
+  // Appelle une route et renvoie le JSON (erreur si code 4xx/5xx)
+  const getJSON = async (chemin) => {
+    const r = await fetch(chemin);
+    if (!r.ok) throw new Error(`Erreur ${r.status} sur ${chemin}`);
+    return r.json();
+  };
+  const base = `/api/candidats/${CANDIDAT_SLUG}`;
+  // Vague 1 : 5 appels indépendants lancés en même temps (Promise.all)
+  const [profil, stats, reponseProjets, graphe, transversales] = await Promise.all([
+    getJSON(base),                                                                   // R1 (MongoDB)
+    getJSON(`${base}/stats`),                                                        // R3 (agrégation MongoDB)
+    getJSON(`${base}/projets?page=1&size=100`),                                      // R2 (MongoDB)
+    getJSON(`/api/graph/competences/${CANDIDAT_SLUG}`),                              // R5 (Neo4j)
+    getJSON(`/api/graph/candidats/${CANDIDAT_SLUG}/competences-transversales?min_projets=2`), // R7 (Neo4j)
+  ]);
+  // Vague 2 : appels qui dépendent de la vague 1, eux aussi en parallèle
+  const competences = stats.competences || [];
+  const slugsProjets = (graphe.nodes || []).filter((n) => n.type === "projet").map((n) => n.id.split(":")[1]);
+  const [parCompetence, listeSimilaires] = await Promise.all([
+    // R2 avec ?competence= : MongoDB renvoie les projets de chaque compétence (filtres)
+    Promise.all(competences.map((c) => getJSON(`${base}/projets?competence=${encodeURIComponent(c.skill_slug)}&page=1&size=100`))),
+    // R4 (Neo4j) : projets similaires de chacun de mes projets
+    Promise.all(slugsProjets.map((s) => getJSON(`/api/graph/projets/${encodeURIComponent(s)}/similaires?limit=5`))),
+  ]);
+  return {
+    avatar: "avatar.png",
+    profil, stats, graphe, transversales,
+    projets: reponseProjets.items || [],
+    projetsParCompetence: Object.fromEntries(competences.map((c, i) => [c.skill_slug, (parCompetence[i].items || []).map((p) => p.projet_slug)])),
+    similaires: Object.fromEntries(slugsProjets.map((s, i) => [s, listeSimilaires[i]])),
+  };
+}
+
+// ── Utilitaires ──
+const $ = (id) => document.getElementById(id);
+// Protège le texte avant de l'insérer dans le HTML
+const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const MOIS = ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+// '2026-09' ou '2026-09-01' → 'sept. 2026' ; vide → "aujourd'hui"
+function moisAnnee(iso) {
+  if (!iso) return "aujourd'hui";
+  const [annee, mois] = String(iso).split("-");
+  return mois ? `${MOIS[parseInt(mois, 10) - 1]} ${annee}` : annee;
+}
+const periode = (d, f) => (!d && !f) ? "" : `${moisAnnee(d)} — ${moisAnnee(f)}`;
+const noms = (liste) => (liste || []).map((c) => typeof c === "string" ? c : (c.nom || c.skill_slug));
+const COULEURS_POLA = ["#FF8FAB", "#FB6F92", "#FFB3C1", "#A4133C", "#FF4D6D", "#800F2F"];
+const COULEURS_POSTIT = ["#FFCCD5", "#FFB3C1", "#FFE5EC", "#FF8FAB", "#FFF8F3"];
+
+// ── Affichage : tout ce qui suit construit la page à partir des données ──
+function afficher(DATA) {
+const { profil, stats, projets, projetsParCompetence, graphe, similaires, transversales, avatar } = DATA;
+
+// ── Accueil (R1) ──
+$("logo").textContent = `${profil.prenom || ""} ✦`;
+// Le nom apparaît lettre par lettre (chaque lettre a un petit retard)
+const lettres = (t, depart) => [...String(t || "")].map((l, i) => `<span style="animation-delay:${depart + i * 0.06}s">${l === " " ? "&nbsp;" : esc(l)}</span>`).join("");
+$("prenom").innerHTML = lettres(profil.prenom, 0.1);
+$("nom").innerHTML = lettres(profil.nom, 0.5);
+$("titre").textContent = profil.titre || "";
+$("bio").textContent = profil.bio || "";
+if (avatar) $("avatar").src = avatar; else $("avatar").style.display = "none";
+
+// Stickers autour de l'avatar : chiffres issus de R1 et de l'agrégation MongoDB (R3)
+const stickers = [
+  [stats.nb_projets || 0, "projets", "6%", "18%"],
+  [stats.nb_competences || 0, "compétences", "60%", "8%"],
+  [(profil.experiences || []).length, "expériences", "4%", "62%"],
+];
+stickers.forEach(([v, l, gauche, haut], i) => {
+  const s = document.createElement("div");
+  s.className = "sticker"; s.style.left = gauche; s.style.top = haut; s.style.animationDelay = `${i * 0.7}s`;
+  s.innerHTML = `<b>${v}</b>${l}`;
+  $("scene").appendChild(s);
+});
+// Étoiles dorées qui scintillent
+[["14%","8%"],["80%","40%"],["22%","78%"],["88%","82%"],["48%","2%"]].forEach(([g, h], i) => {
+  const e = document.createElement("span");
+  e.className = "etoile"; e.textContent = "✦"; e.style.left = g; e.style.top = h; e.style.animationDelay = `${i * 0.45}s`;
+  $("scene").appendChild(e);
+});
+// Clic sur l'avatar : explosion de cœurs
+$("avatar").addEventListener("click", (ev) => {
+  for (let i = 0; i < 18; i++) {
+    const c = document.createElement("span");
+    c.className = "confetti"; c.textContent = ["♡", "✦", "♥"][i % 3];
+    c.style.color = ["#FF4D6D", "#F0B65C", "#FB6F92"][i % 3];
+    c.style.left = ev.clientX + "px"; c.style.top = ev.clientY + "px";
+    const angle = (Math.PI * 2 * i) / 18;
+    c.style.setProperty("--dx", `${Math.cos(angle) * 140}px`); c.style.setProperty("--dy", `${Math.sin(angle) * 140}px`); c.style.setProperty("--r", `${i * 40}deg`);
+    document.body.appendChild(c); setTimeout(() => c.remove(), 1200);
+  }
+});
+
+// ── Bandeau défilant : compétences issues de l'agrégation (R3) ──
+const nomsComp = (stats.competences || []).map((c) => esc(c.nom));
+let serie = nomsComp;
+while (serie.length && serie.length < 12) serie = serie.concat(nomsComp);   // assez de mots pour toute la largeur
+$("ticker").innerHTML = [...serie, ...serie].map((n) => `<span>${n}</span>`).join("");
+
+// ── Post-it déplaçables (R3) ──
+(stats.competences || []).forEach((c, i) => {
+  const p = document.createElement("div");
+  p.className = "postit";
+  p.style.background = COULEURS_POSTIT[i % COULEURS_POSTIT.length];
+  p.style.transform = `rotate(${(i % 5) * 2.5 - 5}deg)`;
+  p.innerHTML = `<div class="nomc">${esc(c.nom)}</div><div class="nb">${c.nb_projets} projet${c.nb_projets > 1 ? "s" : ""}</div>`;
+  rendreDeplacable(p);
+  $("tableau").appendChild(p);
+});
+// On mémorise le déplacement du post-it et on le décale avec translate
+function rendreDeplacable(el) {
+  let x = 0, y = 0, depart = null;
+  const rotation = () => el.style.transform.replace(/translate\([^)]*\)\s*/, "");
+  el.addEventListener("pointerdown", (e) => { depart = { x: e.clientX - x, y: e.clientY - y }; el.setPointerCapture(e.pointerId); });
+  el.addEventListener("pointermove", (e) => {
+    if (!depart) return;
+    x = e.clientX - depart.x; y = e.clientY - depart.y;
+    el.style.transform = `translate(${x}px, ${y}px) ${rotation()}`;
+  });
+  el.addEventListener("pointerup", () => { depart = null; });
+}
+
+// ── Parcours (R1) ──
+$("experiences").innerHTML = (profil.experiences || []).map((e, i) => `<div class="page-journal ${i === 0 ? "scotch" : ""}">
+  ${e.type ? `<span class="badge">${esc(e.type)}</span>` : ""}
+  <div class="date-script">${periode(e.debut, e.fin)}</div>
+  <div class="poste">${esc(e.poste)}</div>
+  <div class="lieu">${esc(e.entreprise)}</div>
+  <p>${esc(e.description)}</p></div>`).join("");
+$("formations").innerHTML = (profil.formations || []).map((f) => `<div class="diplome">
+  <div class="date-script">${periode(f.debut, f.fin)}</div>
+  <div class="poste" style="font-size:1.1rem">${esc(f.diplome)}</div>
+  <div class="lieu">${esc(f.ecole)}</div></div>`).join("");
+$("langues").innerHTML = (profil.langues || []).map((l) => `<span>${esc(l.langue)} · ${esc(l.niveau)}</span>`).join("");
+
+// ── Projets : polaroïds (R2) + filtre par compétence (R2 avec ?competence=…) ──
+function polaroid(p, i) {
+  const couleur = COULEURS_POLA[i % COULEURS_POLA.length];
+  const angle = [-3, 2, -1.5, 3, -2, 1][i % 6];
+  return `<div class="polaroid ${i % 3 === 0 ? "scotch" : ""}" data-slug="${esc(p.projet_slug)}" style="transform:rotate(${angle}deg);animation-delay:${i * 0.07}s">
+    <div class="photo" style="background:linear-gradient(135deg, ${couleur}, #FFCCD5)"><span class="initiale">${esc((p.titre || "?")[0])}</span><span class="coeur">♡</span></div>
+    <div class="legende-pola">${esc(p.titre)}</div>
+    <div style="font-size:.85rem;color:var(--cherry)">${periode(p.date_debut, p.date_fin)}</div>
+    <div class="mots">${noms(p.competences).map(esc).join(" · ")}</div></div>`;
+}
+function afficherProjets(slugCompetence) {
+  // Pour une compétence, app.py a déjà appelé R2 avec ?competence=<slug> (filtre fait par MongoDB)
+  const garder = slugCompetence ? new Set(projetsParCompetence[slugCompetence] || []) : null;
+  const liste = garder ? projets.filter((p) => garder.has(p.projet_slug)) : projets;
+  $("mur").innerHTML = liste.length ? liste.map(polaroid).join("") : `<p class="vide">Aucun projet avec cette compétence.</p>`;
+  $("mur").querySelectorAll(".polaroid").forEach((el) => el.addEventListener("click", () => ouvrirProjet(el.dataset.slug)));
+}
+$("filtres").innerHTML = `<button class="actif" data-slug="">Tous ♡</button>` +
+  (stats.competences || []).map((c) => `<button data-slug="${esc(c.skill_slug)}">${esc(c.nom)}</button>`).join("");
+$("filtres").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
+  $("filtres").querySelectorAll("button").forEach((x) => x.classList.toggle("actif", x === b));
+  afficherProjets(b.dataset.slug);
+}));
+afficherProjets("");
+
+// ── Fenêtre « page de journal » d'un projet ──
+function ouvrirProjet(slug) {
+  const p = projets.find((x) => x.projet_slug === slug);
+  if (!p) return;
+  const liens = Object.entries(p.liens || {}).filter(([, u]) => u).map(([n, u]) => `<a href="${esc(u)}" target="_blank">${esc(n)} ↗</a>`).join("");
+  $("modale").innerHTML = `<button class="fermer" aria-label="Fermer">×</button>
+    ${p.type || p.contexte ? `<span class="badge">${esc(p.type || p.contexte)}</span>` : ""}
+    <h3>${esc(p.titre)}</h3><div class="date-script">${periode(p.date_debut, p.date_fin)}</div>
+    <p>${esc(p.description)}</p>
+    ${p.resultats ? `<p class="resultat">${esc(p.resultats)}</p>` : ""}
+    <div class="mots">${noms(p.competences).map(esc).join(" · ")}</div>
+    ${(p.auteurs || []).length > 1 ? `<p style="font-style:italic">En équipe avec : ${p.auteurs.map(esc).join(", ")}</p>` : ""}
+    <p>${liens}</p>`;
+  $("voile").classList.add("ouvert");
+  $("modale").querySelector(".fermer").addEventListener("click", fermer);
+}
+const fermer = () => $("voile").classList.remove("ouvert");
+$("voile").addEventListener("click", (e) => { if (e.target.id === "voile") fermer(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") fermer(); });
+
+// ── Constellation : graphe (R5) + projets similaires (R4) + incontournables (R7) ──
+const COULEURS = { candidat: "#590D22", projet: "#FF4D6D", competence: "#F0B65C" };
+function dessinerGraphe() {
+  if (typeof ForceGraph === "undefined") { $("graphe").innerHTML = '<p class="vide" style="padding:20px">Le graphe a besoin d\'une connexion internet pour se charger.</p>'; return; }
+  const conteneur = $("graphe");
+  // force-graph attend { nodes, links } : c'est exactement le format renvoyé par R5
+  const data = { nodes: graphe.nodes.map((n) => ({ ...n })), links: graphe.links.map((l) => ({ ...l })) };
+  const voisins = {};
+  data.links.forEach((l) => { (voisins[l.source] ||= new Set()).add(l.target); (voisins[l.target] ||= new Set()).add(l.source); });
+  let survole = null;
+  const actif = (l) => survole && (l.source.id === survole || l.target.id === survole);
+  const taille = (n) => n.type === "candidat" ? 12 : n.type === "projet" ? 7 : 4 + 2 * (n.nb_projets || 1);
+  // Dessine un cœur (pour mon propre nœud)
+  const coeur = (ctx, x, y, r) => {
+    ctx.beginPath(); ctx.moveTo(x, y + r * 0.9);
+    ctx.bezierCurveTo(x - r * 1.6, y - r * 0.2, x - r * 0.8, y - r * 1.5, x, y - r * 0.5);
+    ctx.bezierCurveTo(x + r * 0.8, y - r * 1.5, x + r * 1.6, y - r * 0.2, x, y + r * 0.9); ctx.fill();
+  };
+  const g = ForceGraph()(conteneur)
+    .width(conteneur.clientWidth).height(560)
+    .graphData(data)
+    .backgroundColor("#FFE5EC")
+    .linkColor((l) => actif(l) ? "#FF4D6D" : "#FFB3C1")
+    .linkWidth((l) => actif(l) ? 2.4 : 1.2)
+    .linkDirectionalParticles((l) => actif(l) ? 4 : 0)
+    .linkDirectionalParticleColor(() => "#F0B65C")
+    .linkDirectionalParticleWidth(3)
+    .onNodeHover((n) => { survole = n ? n.id : null; conteneur.style.cursor = n ? "pointer" : "grab"; })
+    .onNodeClick((n) => {
+      g.centerAt(n.x, n.y, 600); g.zoom(2.4, 600);
+      if (n.type === "projet") afficherSimilaires(n.id.split(":")[1], n.label);
+    })
+    // Dessin de chaque nœud : cœur pour moi, cercle sinon, + étiquette
+    .nodeCanvasObject((n, ctx, echelle) => {
+      const estompe = survole && survole !== n.id && !(voisins[survole] || new Set()).has(n.id);
+      ctx.globalAlpha = estompe ? 0.25 : 1;
+      ctx.fillStyle = COULEURS[n.type] || "#A4133C";
+      if (n.type === "candidat") coeur(ctx, n.x, n.y, taille(n));
+      else { ctx.beginPath(); ctx.arc(n.x, n.y, taille(n), 0, 2 * Math.PI); ctx.fill(); }
+      const police = Math.max(12 / echelle, 2.6);
+      ctx.font = `${n.type === "competence" ? "500" : "700"} ${police}px "DM Sans", sans-serif`;
+      ctx.textAlign = "center"; ctx.textBaseline = "top"; ctx.fillStyle = "#590D22";
+      ctx.fillText(n.label, n.x, n.y + taille(n) + 2);
+      ctx.globalAlpha = 1;
+    })
+    .nodePointerAreaPaint((n, c, ctx) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(n.x, n.y, taille(n) + 3, 0, 2 * Math.PI); ctx.fill(); });
+  setTimeout(() => g.zoomToFit(600, 40), 1000);
+}
+function afficherSimilaires(slug, titre) {
+  const liste = (similaires[slug] || {}).similaires || [];
+  $("similaires").innerHTML = `<p style="margin-bottom:6px">Autour de <b>${esc(titre)}</b> :</p>` + (liste.length
+    ? liste.map((s, i) => `<div class="sim" style="animation-delay:${i * 0.08}s"><b>${esc(s.titre)}</b>
+        <div class="mots">${(s.competences_communes || []).map(esc).join(" · ")}</div>
+        <div style="font-size:.85rem">${s.score} compétence${s.score > 1 ? "s" : ""} en commun ♡</div></div>`).join("")
+    : `<p class="vide">Aucun projet similaire pour l'instant.</p>`);
+}
+$("transversales").innerHTML = (transversales.competences || []).length
+  ? transversales.competences.map((c) => `<div class="incontournable">${esc(c.nom)}<span>${c.nb_projets} projets</span></div>`).join("")
+  : `<p class="vide">Aucune compétence utilisée dans au moins 2 projets.</p>`;
+
+// Le graphe se dessine quand sa section arrive à l'écran ; les sections apparaissent en douceur
+let grapheFait = false;
+const obs = new IntersectionObserver((entrees) => entrees.forEach((en) => {
+  if (!en.isIntersecting) return;
+  en.target.classList.add("vue");
+  if (en.target.id === "constellation" && !grapheFait) { grapheFait = true; setTimeout(dessinerGraphe, 300); }
+}), { threshold: 0.12 });
+document.querySelectorAll(".apparait").forEach((s) => obs.observe(s));
+
+// ── Contacts (R1) ──
+const contacts = profil.contacts || {};
+$("contacts").innerHTML = Object.entries(contacts).filter(([, u]) => u)
+  .map(([n, u]) => n === "email" ? `<a href="mailto:${esc(u)}">M'écrire</a>` : `<a href="${esc(u)}" target="_blank">${esc(n.charAt(0).toUpperCase() + n.slice(1))}</a>`).join("") +
+  `<p style="margin-top:22px;opacity:.75">${esc(profil.prenom || "")} ${esc(profil.nom || "")} · Portfolio Polyglotte · MongoDB × Neo4j</p>`;
+
+// ── Liens internes (menu, boutons « Voir mes projets »…) ──
+// La page est affichée dans un cadre (iframe) : le saut vers #section ne marche pas tout seul,
+// donc on intercepte le clic et on fait défiler nous-mêmes jusqu'à la section visée.
+document.querySelectorAll('a[href^="#"]').forEach((lien) => {
+  lien.addEventListener("click", (e) => {
+    e.preventDefault();
+    const cible = document.querySelector(lien.getAttribute("href"));
+    if (cible) cible.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
+
+// ── Paillettes qui suivent la souris (désactivées par défaut, bouton dans la barre) ──
+let paillettesActives = false;
+$("paillettes").addEventListener("click", () => {
+  paillettesActives = !paillettesActives;
+  $("paillettes").classList.toggle("plein", paillettesActives);
+  $("paillettes").classList.toggle("vide", !paillettesActives);
+});
+let derniere = 0;
+document.addEventListener("mousemove", (e) => {
+  if (!paillettesActives) return;
+  const maintenant = Date.now();
+  if (maintenant - derniere < 60) return;   // limite le nombre de paillettes
+  derniere = maintenant;
+  const s = document.createElement("span");
+  s.className = "paillette"; s.textContent = Math.random() > 0.5 ? "✦" : "♡";
+  s.style.color = ["#FF4D6D", "#F0B65C", "#FB6F92"][Math.floor(Math.random() * 3)];
+  s.style.left = e.clientX + "px"; s.style.top = e.clientY + "px";
+  document.body.appendChild(s); setTimeout(() => s.remove(), 1000);
+});
+
+// Les données sont affichées : on retire l'écran de chargement
+$("chargement").remove();
+}
+
+// Lancement : on récupère les données, puis on construit la page
+chargerDonnees().then(afficher).catch((erreur) => {
+  $("chargement").innerHTML = `<div style="font-family:'DM Sans',sans-serif;font-size:1rem;text-align:center;padding:20px">Impossible de charger le portfolio.<br>${esc(erreur.message)}</div>`;
+});
+</script>
+</body>
+</html>
