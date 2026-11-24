@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/:chemin*",
+      "destination": "https://2026-2027-rouen-portfolio-akatsuki.vercel.app/api/:chemin*"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

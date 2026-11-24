@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/* Ambiance du portfolio : tons nuit + accent violet (repris de l'avatar) */
+@theme {
+  --color-nuit-950: #0b0a12;
+  --color-nuit-900: #12101c;
+  --color-nuit-800: #1b1828;
+  --color-nuit-700: #2a2540;
+  --color-nuit-600: #3a3456;
+  --color-accent: #8b3dff;
+  --color-accent-clair: #b98cff;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-titre: "Space Grotesk", "Inter", sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-nuit-950 font-sans text-slate-300 antialiased;
+}
+
+::selection {
+  @apply bg-accent/40 text-white;
+}
+
+/* Vapeur de la tasse : monte en ondulant puis s'efface */
+.vapeur {
+  transform-box: fill-box;
+  animation: vapeur 2.4s ease-in-out infinite;
+}
+
+@keyframes vapeur {
+  0% { opacity: 0; transform: translateY(4px); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-6px) translateX(1px); }
+}
+
+/* « Neige » de la télé entre deux chaînes (bruit généré en SVG) */
+.neige {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: neige 0.2s steps(4) infinite;
+}
+
+@keyframes neige {
+  0% { background-position: 0 0; }
+  25% { background-position: -40px 20px; }
+  50% { background-position: 30px -30px; }
+  75% { background-position: -20px -10px; }
+  100% { background-position: 10px 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vapeur,
+  .neige {
+    animation: none;
+  }
+}
+
+/* Étoiles du balcon : scintillent chacune à leur rythme (animation-delay en ligne) */
+.scintille {
+  animation: scintille 3s ease-in-out infinite;
+}
+
+@keyframes scintille {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+/* Étoile filante : traverse le ciel une fois toutes les 9 secondes */
+.etoile-filante {
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, white, transparent);
+  border-radius: 9999px;
+  opacity: 0;
+  animation: etoile-filante 9s linear infinite;
+}
+
+@keyframes etoile-filante {
+  0% { transform: translate(0, 0) rotate(-20deg); opacity: 0; }
+  2% { opacity: 1; }
+  9% { transform: translate(-420px, 160px) rotate(-20deg); opacity: 0; }
+  100% { transform: translate(-420px, 160px) rotate(-20deg); opacity: 0; }
+}
+
+/* Placé après leurs définitions pour bien les surcharger */
+@media (prefers-reduced-motion: reduce) {
+  .scintille,
+  .etoile-filante {
+    animation: none;
+  }
+}
