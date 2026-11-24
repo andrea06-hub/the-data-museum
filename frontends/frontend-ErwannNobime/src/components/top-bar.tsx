@@ -30,17 +30,17 @@ export function TopBar() {
 
   return (
     <>
-      <header className="sticky top-0 z-20 border-b border-border-soft bg-bg/80 backdrop-blur-md">
-        <div className="mx-auto flex h-[60px] max-w-6xl items-center justify-between gap-4 px-5">
+      <header className="sticky top-[max(12px,env(safe-area-inset-top,0px))] z-20 px-4">
+        <div className="glass mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 rounded-2xl px-4">
           <Link
             href="/"
-            className="flex items-center gap-2.5 font-display font-semibold tracking-tight"
+            className="relative z-10 flex items-center gap-2.5 font-display font-semibold tracking-tight"
           >
             <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]" />
             Erwann Nobime
           </Link>
 
-          <nav className="hidden items-center gap-1 sm:flex">
+          <nav className="relative z-10 hidden items-center gap-1 sm:flex">
             {LINKS.map((link) => {
               const active =
                 link.href === "/"
@@ -54,7 +54,7 @@ export function TopBar() {
                     "rounded-md px-2.5 py-1.5 font-mono text-[0.76rem] transition",
                     active
                       ? "text-accent"
-                      : "text-fg-muted hover:bg-surface-2 hover:text-fg",
+                      : "text-fg-muted hover:bg-fg/5 hover:text-fg",
                   ].join(" ")}
                 >
                   {link.label}
@@ -63,14 +63,14 @@ export function TopBar() {
             })}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="relative z-10 flex items-center gap-2">
             <button
               type="button"
               onClick={() => setCmdOpen(true)}
-              className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-[0.72rem] text-fg-muted transition hover:border-accent hover:text-fg"
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--glass-edge)] bg-fg/5 px-2.5 py-1.5 font-mono text-[0.72rem] text-fg-muted transition hover:border-accent hover:text-fg"
             >
               Chercher
-              <kbd className="rounded border border-border bg-surface-2 px-1.5 py-px text-[0.68rem] text-fg-muted">
+              <kbd className="rounded border border-border bg-fg/5 px-1.5 py-px text-[0.68rem] text-fg-muted">
                 ⌘K
               </kbd>
             </button>

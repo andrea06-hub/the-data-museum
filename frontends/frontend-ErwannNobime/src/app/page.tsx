@@ -173,12 +173,14 @@ export default async function HomePage() {
             value={stats?.nb_projets ?? 0}
             sub="académiques · pro · perso"
             meter={86}
+            href="/projets"
           />
           <Instrument
             label="Compétences"
             value={stats?.nb_competences ?? 0}
             sub="data · dev · cloud · bi"
             meter={72}
+            href="/graphe"
           />
           <Instrument
             label="Ans d'expérience"
@@ -186,12 +188,14 @@ export default async function HomePage() {
             suffix="+"
             sub="depuis les premiers stages"
             meter={48}
+            href="/parcours"
           />
           <Instrument
             label="En entreprise"
             value={nbExp}
             sub="stages + alternance"
             meter={64}
+            href="/parcours"
           />
         </div>
       </section>
@@ -275,15 +279,21 @@ function Instrument({
   suffix,
   sub,
   meter,
+  href,
 }: {
   label: string;
   value: number;
   suffix?: string;
   sub: string;
   meter: number;
+  href: string;
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-surface p-[18px]">
+    <Link
+      href={href}
+      className="group relative block overflow-hidden rounded-2xl border border-border bg-surface p-[18px] transition hover:-translate-y-0.5 hover:border-accent/55"
+    >
+      <ArrowUpRight className="absolute right-3.5 top-3.5 h-3.5 w-3.5 text-faint opacity-0 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent group-hover:opacity-100" />
       <div className="font-mono text-[0.64rem] uppercase tracking-[0.14em] text-fg-muted">
         {label}
       </div>
@@ -294,7 +304,7 @@ function Instrument({
       <div className="mt-2 font-mono text-[0.64rem] text-faint">{sub}</div>
       <div className="mt-3.5 h-[3px] overflow-hidden rounded-sm bg-surface-2">
         <i
-          className="block h-full rounded-sm"
+          className="block h-full rounded-sm transition-all duration-500 group-hover:brightness-125"
           style={{
             width: `${meter}%`,
             background:
@@ -302,7 +312,7 @@ function Instrument({
           }}
         />
       </div>
-    </div>
+    </Link>
   );
 }
 
