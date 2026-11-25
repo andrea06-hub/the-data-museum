@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import RelatedProjects from './RelatedProjects'
 
-const API_URL = 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 function Collection() {
   const [projects, setProjects] = useState([])

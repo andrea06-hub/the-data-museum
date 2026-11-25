@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 
-const API_URL = 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const SLUG = 'andrea-vissoh'
 
 async function fetchData(path) {
